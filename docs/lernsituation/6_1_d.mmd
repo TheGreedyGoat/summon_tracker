@@ -1,0 +1,17 @@
+erDiagram 
+    Band{
+        int id PK
+        String Name
+    }
+    Auftritt{
+        int band_id FK, PK
+        time Uhrzeit
+        date tag
+        int v_id FK, PK
+    }
+    Veranstaltung{
+        int id PK
+        String Name
+    }
+    Band ||--o{ Auftritt : gibt
+    Veranstaltung ||--o{ Auftritt: hat

@@ -1,0 +1,34 @@
+erDiagram
+    Artikel {
+        int Artikelnummer PK
+        string Bezeichnung
+        int Preis
+        int Bestand
+    }
+    Kunde {
+        int Kundennummer PK
+        String Name
+        String Vorname
+    }
+    ArtRetoure{
+        int Art_Nr FK
+        int Ret_Nr FK
+    }
+    Retoure{
+        int Retournummer PK
+        date Datum
+        int Menge
+        String Grund
+        bool Erstattung
+        int M_Nr FK
+    }
+    Mitarbeiter{
+        int M_Nr PK
+        String Name
+        String Vorname
+    }
+
+    Retoure ||--o{ Mitarbeiter : "wird bearbeitet"
+    Artikel || --o{ ArtRetoure: "retour"
+    Retoure ||--o{ ArtRetoure: ""
+    Retoure ||--o{ Kunde: "wird veranlasst von"
