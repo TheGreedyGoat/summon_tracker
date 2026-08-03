@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'summon.dart';
+part of 'summon_template.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,40 +12,33 @@ part of 'summon.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$SummonData {
+mixin _$SummonTemplate {
 
- StatExpression get hitPoints; StatExpression get armorClass; StatExpression get strength; StatExpression get dexterity; StatExpression get constitution; StatExpression get intelligence; StatExpression get wisdom; StatExpression get charisma; StatExpression get proficiency;
-/// Create a copy of SummonData
+ String get id; String get name; StatExpression get hitPoints; StatExpression get armorClass; StatExpression get strength; StatExpression get dexterity; StatExpression get constitution; StatExpression get intelligence; StatExpression get wisdom; StatExpression get charisma; StatExpression get proficiency;
+/// Create a copy of SummonTemplate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SummonDataCopyWith<SummonData> get copyWith => _$SummonDataCopyWithImpl<SummonData>(this as SummonData, _$identity);
+$SummonTemplateCopyWith<SummonTemplate> get copyWith => _$SummonTemplateCopyWithImpl<SummonTemplate>(this as SummonTemplate, _$identity);
 
 
 
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SummonData&&(identical(other.hitPoints, hitPoints) || other.hitPoints == hitPoints)&&(identical(other.armorClass, armorClass) || other.armorClass == armorClass)&&(identical(other.strength, strength) || other.strength == strength)&&(identical(other.dexterity, dexterity) || other.dexterity == dexterity)&&(identical(other.constitution, constitution) || other.constitution == constitution)&&(identical(other.intelligence, intelligence) || other.intelligence == intelligence)&&(identical(other.wisdom, wisdom) || other.wisdom == wisdom)&&(identical(other.charisma, charisma) || other.charisma == charisma)&&(identical(other.proficiency, proficiency) || other.proficiency == proficiency));
-}
 
-
-@override
-int get hashCode => Object.hash(runtimeType,hitPoints,armorClass,strength,dexterity,constitution,intelligence,wisdom,charisma,proficiency);
 
 @override
 String toString() {
-  return 'SummonData(hitPoints: $hitPoints, armorClass: $armorClass, strength: $strength, dexterity: $dexterity, constitution: $constitution, intelligence: $intelligence, wisdom: $wisdom, charisma: $charisma, proficiency: $proficiency)';
+  return 'SummonTemplate(id: $id, name: $name, hitPoints: $hitPoints, armorClass: $armorClass, strength: $strength, dexterity: $dexterity, constitution: $constitution, intelligence: $intelligence, wisdom: $wisdom, charisma: $charisma, proficiency: $proficiency)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $SummonDataCopyWith<$Res>  {
-  factory $SummonDataCopyWith(SummonData value, $Res Function(SummonData) _then) = _$SummonDataCopyWithImpl;
+abstract mixin class $SummonTemplateCopyWith<$Res>  {
+  factory $SummonTemplateCopyWith(SummonTemplate value, $Res Function(SummonTemplate) _then) = _$SummonTemplateCopyWithImpl;
 @useResult
 $Res call({
- StatExpression hitPoints, StatExpression armorClass, StatExpression strength, StatExpression dexterity, StatExpression constitution, StatExpression intelligence, StatExpression wisdom, StatExpression charisma, StatExpression proficiency
+ String? id, String name, StatExpression hitPoints, StatExpression armorClass, StatExpression strength, StatExpression dexterity, StatExpression constitution, StatExpression intelligence, StatExpression wisdom, StatExpression charisma, StatExpression proficiency
 });
 
 
@@ -53,18 +46,20 @@ $Res call({
 
 }
 /// @nodoc
-class _$SummonDataCopyWithImpl<$Res>
-    implements $SummonDataCopyWith<$Res> {
-  _$SummonDataCopyWithImpl(this._self, this._then);
+class _$SummonTemplateCopyWithImpl<$Res>
+    implements $SummonTemplateCopyWith<$Res> {
+  _$SummonTemplateCopyWithImpl(this._self, this._then);
 
-  final SummonData _self;
-  final $Res Function(SummonData) _then;
+  final SummonTemplate _self;
+  final $Res Function(SummonTemplate) _then;
 
-/// Create a copy of SummonData
+/// Create a copy of SummonTemplate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? hitPoints = null,Object? armorClass = null,Object? strength = null,Object? dexterity = null,Object? constitution = null,Object? intelligence = null,Object? wisdom = null,Object? charisma = null,Object? proficiency = null,}) {
-  return _then(SummonData(
-hitPoints: null == hitPoints ? _self.hitPoints : hitPoints // ignore: cast_nullable_to_non_nullable
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = null,Object? hitPoints = null,Object? armorClass = null,Object? strength = null,Object? dexterity = null,Object? constitution = null,Object? intelligence = null,Object? wisdom = null,Object? charisma = null,Object? proficiency = null,}) {
+  return _then(SummonTemplate(
+id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
+as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,hitPoints: null == hitPoints ? _self.hitPoints : hitPoints // ignore: cast_nullable_to_non_nullable
 as StatExpression,armorClass: null == armorClass ? _self.armorClass : armorClass // ignore: cast_nullable_to_non_nullable
 as StatExpression,strength: null == strength ? _self.strength : strength // ignore: cast_nullable_to_non_nullable
 as StatExpression,dexterity: null == dexterity ? _self.dexterity : dexterity // ignore: cast_nullable_to_non_nullable
@@ -80,8 +75,8 @@ as StatExpression,
 }
 
 
-/// Adds pattern-matching-related methods to [SummonData].
-extension SummonDataPatterns on SummonData {
+/// Adds pattern-matching-related methods to [SummonTemplate].
+extension SummonTemplatePatterns on SummonTemplate {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:

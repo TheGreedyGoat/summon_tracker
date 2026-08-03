@@ -1,14 +1,14 @@
 final Map<String, int> variables = {'level': 5, 'con': 5, 'avg': 4};
 
-class Variable {
+class TVariable {
   final String name;
   final String tag;
   final int value;
-  Variable({required this.name, required this.tag, required this.value});
+  TVariable({required this.name, required this.tag, required this.value});
 
   @override
   bool operator ==(Object other) {
-    return other is Variable && other.hashCode == hashCode && other.tag == tag;
+    return other is TVariable && other.hashCode == hashCode && other.tag == tag;
   }
 
   Map<String, dynamic> get toJson => {'tag': tag, 'name': name, 'value': value};
@@ -19,8 +19,8 @@ class Variable {
   @override
   int get hashCode => Object.hash('variable', tag);
 
-  Variable copyWith({String? name, int? value}) =>
-      Variable(name: name ?? this.name, tag: tag, value: value ?? this.value);
+  TVariable copyWith({String? name, int? value}) =>
+      TVariable(name: name ?? this.name, tag: tag, value: value ?? this.value);
 }
 
 class VariableService {
@@ -31,7 +31,7 @@ class VariableService {
     return _instance!;
   }
 
-  final Set<Variable> _variables = {};
+  final Set<TVariable> _variables = {};
 
   VariableService._();
 
@@ -42,13 +42,13 @@ class VariableService {
     return false;
   }
 
-  Variable? _getVariable(String tag) {
+  TVariable? _getVariable(String tag) {
     for (final v in _variables) {
       if (v.tag == tag) return v;
     }
   }
 
-  List<Variable> get all => _variables.toList();
+  List<TVariable> get all => _variables.toList();
 
   Map<String, int> getVariables(List<String> tags) {
     final result = <String, int>{};
@@ -70,7 +70,7 @@ class VariableService {
       return;
     }
 
-    _variables.add(Variable(name: name, tag: tag, value: value));
+    _variables.add(TVariable(name: name, tag: tag, value: value));
   }
 
   bool updateVariable(String tag, {String? name, int? value}) {

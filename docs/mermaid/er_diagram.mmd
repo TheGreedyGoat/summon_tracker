@@ -1,0 +1,36 @@
+erDiagram
+    SUMMON_TEMPLATE{
+        String id PK
+        String HP
+        String AC
+        String etc
+    }
+
+    SUMMON_INSTANCE{
+        String id PK
+        String T_id FK
+    }
+
+
+    INSTANCE_VARIABLE{
+        String I_id PK,FK
+        String V_id PK, FK
+    }
+
+
+    VARIABLE{
+        String id PK
+        String tag
+        int value
+    }
+
+    TEMPLATE_VARIABLE{
+        String T_id PK, FK
+        String V_id PK, FK
+
+    }
+    SUMMON_TEMPLATE ||--o{ SUMMON_INSTANCE: has
+    SUMMON_TEMPLATE ||--o{ TEMPLATE_VARIABLE: has
+    SUMMON_INSTANCE ||--o{ INSTANCE_VARIABLE: contains
+    INSTANCE_VARIABLE ||--|| VARIABLE : is
+    TEMPLATE_VARIABLE ||--|| VARIABLE : is

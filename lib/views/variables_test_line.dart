@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:summon_tracker/variables.dart';
 
 class VariablesTestLine extends StatefulWidget {
-  final Variable variable;
+  final TVariable variable;
   final void Function() onChanged;
   const VariablesTestLine({
     required this.variable,

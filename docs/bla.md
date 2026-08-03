@@ -1,0 +1,1 @@
+**Claws.**_Melee Weapon Attack:_ [STR ATK] to hit, reach ??? ft., one target. _Hit:_ [STR ???D???] ??? damage.
