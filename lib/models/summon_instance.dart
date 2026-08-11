@@ -1,6 +1,4 @@
 import 'package:summon_tracker/models/instance_variable.dart';
-import 'package:summon_tracker/models/summon_example.dart';
-import 'package:summon_tracker/models/summon_template.dart';
 import 'package:uuid/uuid.dart';
 
 class SummonInstance {
@@ -13,12 +11,6 @@ class SummonInstance {
   }) : this.id = id ?? Uuid().v1() {
     instances.remove(this);
     instances.add(this);
-  }
-
-  SummonTemplate get template {
-    return savedSummons.firstWhere(
-      (element) => element.id == templateID,
-    );
   }
 
   List<InstanceVariable> get instanceVariables => InstanceVariable.iVariables

@@ -1,9 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:summon_tracker/models/stat_expression.dart';
-import 'package:summon_tracker/models/summon_example.dart';
+import 'package:summon_tracker/models/numeric_expression.dart';
 import 'package:summon_tracker/models/summon_template.dart';
-import 'package:summon_tracker/views/pages/fill_in_variables.dart';
 import 'package:summon_tracker/views/widget_tree_notifier.dart';
 
 class SummonEditPage extends ConsumerStatefulWidget {
@@ -165,7 +163,8 @@ class _SummonEditPageState extends ConsumerState<SummonEditPage> {
     );
   }
 
-  bool validateExpression(String exp) => StatExpression.tryParse(exp) != null;
+  bool validateExpression(String exp) =>
+      NumericExpression.tryParse(exp) != null;
   void _saveSummon() {
     if (hasError.values.contains(true)) {
       print('not possible');
@@ -173,15 +172,21 @@ class _SummonEditPageState extends ConsumerState<SummonEditPage> {
     }
     SummonTemplate(
       name: _controllers[_name]!.text,
-      hitPoints: StatExpression.tryParse(_controllers[_hitPoints]!.text)!,
-      armorClass: StatExpression.tryParse(_controllers[_armorClass]!.text)!,
-      strength: StatExpression.tryParse(_controllers[_strength]!.text)!,
-      dexterity: StatExpression.tryParse(_controllers[_dexterity]!.text)!,
-      constitution: StatExpression.tryParse(_controllers[_constitution]!.text)!,
-      intelligence: StatExpression.tryParse(_controllers[_intelligence]!.text)!,
-      wisdom: StatExpression.tryParse(_controllers[_wisdom]!.text)!,
-      charisma: StatExpression.tryParse(_controllers[_charisma]!.text)!,
-      proficiency: StatExpression.tryParse(_controllers[_proficiency]!.text)!,
+      hitPoints: NumericExpression.tryParse(_controllers[_hitPoints]!.text)!,
+      armorClass: NumericExpression.tryParse(_controllers[_armorClass]!.text)!,
+      strength: NumericExpression.tryParse(_controllers[_strength]!.text)!,
+      dexterity: NumericExpression.tryParse(_controllers[_dexterity]!.text)!,
+      constitution: NumericExpression.tryParse(
+        _controllers[_constitution]!.text,
+      )!,
+      intelligence: NumericExpression.tryParse(
+        _controllers[_intelligence]!.text,
+      )!,
+      wisdom: NumericExpression.tryParse(_controllers[_wisdom]!.text)!,
+      charisma: NumericExpression.tryParse(_controllers[_charisma]!.text)!,
+      proficiency: NumericExpression.tryParse(
+        _controllers[_proficiency]!.text,
+      )!,
     );
 
     final notifier = ref.read(widgetTreeProvider.notifier);

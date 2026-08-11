@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:summon_tracker/models/instance_variable.dart';
-import 'package:summon_tracker/models/stat_expression.dart';
+import 'package:summon_tracker/models/numeric_expression.dart';
 import 'package:summon_tracker/models/summon_instance.dart';
 import 'package:summon_tracker/models/template_variable.dart';
 import 'package:uuid/uuid.dart';
@@ -12,15 +11,16 @@ class SummonTemplate with _$SummonTemplate {
   static final Set<SummonTemplate> templates = {};
   final String id;
   final String name;
-  final StatExpression hitPoints;
-  final StatExpression armorClass;
-  final StatExpression strength;
-  final StatExpression dexterity;
-  final StatExpression constitution;
-  final StatExpression intelligence;
-  final StatExpression wisdom;
-  final StatExpression charisma;
-  final StatExpression proficiency;
+  final NumericExpression armorClass;
+  final NumericExpression hitPoints;
+
+  final NumericExpression strength;
+  final NumericExpression dexterity;
+  final NumericExpression constitution;
+  final NumericExpression intelligence;
+  final NumericExpression wisdom;
+  final NumericExpression charisma;
+  final NumericExpression proficiency;
   SummonTemplate({
     String? id,
     required this.name,
@@ -41,7 +41,7 @@ class SummonTemplate with _$SummonTemplate {
     }
   }
 
-  List<StatExpression> get toList {
+  List<NumericExpression> get toList {
     return [
       hitPoints,
       armorClass,
@@ -55,7 +55,7 @@ class SummonTemplate with _$SummonTemplate {
     ];
   }
 
-  List<StatExpression> get abilityScores => [
+  List<NumericExpression> get abilityScores => [
     strength,
     dexterity,
     constitution,

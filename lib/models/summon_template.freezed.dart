@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SummonTemplate {
 
- String get id; String get name; StatExpression get hitPoints; StatExpression get armorClass; StatExpression get strength; StatExpression get dexterity; StatExpression get constitution; StatExpression get intelligence; StatExpression get wisdom; StatExpression get charisma; StatExpression get proficiency;
+ String get id; String get name; NumericExpression get hitPoints; NumericExpression get armorClass; NumericExpression get strength; NumericExpression get dexterity; NumericExpression get constitution; NumericExpression get intelligence; NumericExpression get wisdom; NumericExpression get charisma; NumericExpression get proficiency;
 /// Create a copy of SummonTemplate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,7 +38,7 @@ abstract mixin class $SummonTemplateCopyWith<$Res>  {
   factory $SummonTemplateCopyWith(SummonTemplate value, $Res Function(SummonTemplate) _then) = _$SummonTemplateCopyWithImpl;
 @useResult
 $Res call({
- String? id, String name, StatExpression hitPoints, StatExpression armorClass, StatExpression strength, StatExpression dexterity, StatExpression constitution, StatExpression intelligence, StatExpression wisdom, StatExpression charisma, StatExpression proficiency
+ String? id, String name, NumericExpression hitPoints, NumericExpression armorClass, NumericExpression strength, NumericExpression dexterity, NumericExpression constitution, NumericExpression intelligence, NumericExpression wisdom, NumericExpression charisma, NumericExpression proficiency
 });
 
 
@@ -60,15 +60,15 @@ class _$SummonTemplateCopyWithImpl<$Res>
 id: freezed == id ? _self.id! : id // ignore: cast_nullable_to_non_nullable
 as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,hitPoints: null == hitPoints ? _self.hitPoints : hitPoints // ignore: cast_nullable_to_non_nullable
-as StatExpression,armorClass: null == armorClass ? _self.armorClass : armorClass // ignore: cast_nullable_to_non_nullable
-as StatExpression,strength: null == strength ? _self.strength : strength // ignore: cast_nullable_to_non_nullable
-as StatExpression,dexterity: null == dexterity ? _self.dexterity : dexterity // ignore: cast_nullable_to_non_nullable
-as StatExpression,constitution: null == constitution ? _self.constitution : constitution // ignore: cast_nullable_to_non_nullable
-as StatExpression,intelligence: null == intelligence ? _self.intelligence : intelligence // ignore: cast_nullable_to_non_nullable
-as StatExpression,wisdom: null == wisdom ? _self.wisdom : wisdom // ignore: cast_nullable_to_non_nullable
-as StatExpression,charisma: null == charisma ? _self.charisma : charisma // ignore: cast_nullable_to_non_nullable
-as StatExpression,proficiency: null == proficiency ? _self.proficiency : proficiency // ignore: cast_nullable_to_non_nullable
-as StatExpression,
+as NumericExpression,armorClass: null == armorClass ? _self.armorClass : armorClass // ignore: cast_nullable_to_non_nullable
+as NumericExpression,strength: null == strength ? _self.strength : strength // ignore: cast_nullable_to_non_nullable
+as NumericExpression,dexterity: null == dexterity ? _self.dexterity : dexterity // ignore: cast_nullable_to_non_nullable
+as NumericExpression,constitution: null == constitution ? _self.constitution : constitution // ignore: cast_nullable_to_non_nullable
+as NumericExpression,intelligence: null == intelligence ? _self.intelligence : intelligence // ignore: cast_nullable_to_non_nullable
+as NumericExpression,wisdom: null == wisdom ? _self.wisdom : wisdom // ignore: cast_nullable_to_non_nullable
+as NumericExpression,charisma: null == charisma ? _self.charisma : charisma // ignore: cast_nullable_to_non_nullable
+as NumericExpression,proficiency: null == proficiency ? _self.proficiency : proficiency // ignore: cast_nullable_to_non_nullable
+as NumericExpression,
   ));
 }
 

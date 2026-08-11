@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'stat_expression.dart';
+part of 'numeric_expression.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'stat_expression.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$StatExpression {
+mixin _$NumericExpression {
 
  String get expression;
-/// Create a copy of StatExpression
+/// Create a copy of NumericExpression
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$StatExpressionCopyWith<StatExpression> get copyWith => _$StatExpressionCopyWithImpl<StatExpression>(this as StatExpression, _$identity);
+$NumericExpressionCopyWith<NumericExpression> get copyWith => _$NumericExpressionCopyWithImpl<NumericExpression>(this as NumericExpression, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatExpression&&(identical(other.expression, expression) || other.expression == expression));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NumericExpression&&(identical(other.expression, expression) || other.expression == expression));
 }
 
 
@@ -37,8 +37,8 @@ int get hashCode => Object.hash(runtimeType,expression);
 }
 
 /// @nodoc
-abstract mixin class $StatExpressionCopyWith<$Res>  {
-  factory $StatExpressionCopyWith(StatExpression value, $Res Function(StatExpression) _then) = _$StatExpressionCopyWithImpl;
+abstract mixin class $NumericExpressionCopyWith<$Res>  {
+  factory $NumericExpressionCopyWith(NumericExpression value, $Res Function(NumericExpression) _then) = _$NumericExpressionCopyWithImpl;
 @useResult
 $Res call({
  String expression
@@ -49,17 +49,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$StatExpressionCopyWithImpl<$Res>
-    implements $StatExpressionCopyWith<$Res> {
-  _$StatExpressionCopyWithImpl(this._self, this._then);
+class _$NumericExpressionCopyWithImpl<$Res>
+    implements $NumericExpressionCopyWith<$Res> {
+  _$NumericExpressionCopyWithImpl(this._self, this._then);
 
-  final StatExpression _self;
-  final $Res Function(StatExpression) _then;
+  final NumericExpression _self;
+  final $Res Function(NumericExpression) _then;
 
-/// Create a copy of StatExpression
+/// Create a copy of NumericExpression
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? expression = null,}) {
-  return _then(StatExpression._(
+  return _then(NumericExpression._(
 expression: null == expression ? _self.expression : expression // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -68,8 +68,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [StatExpression].
-extension StatExpressionPatterns on StatExpression {
+/// Adds pattern-matching-related methods to [NumericExpression].
+extension NumericExpressionPatterns on NumericExpression {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
