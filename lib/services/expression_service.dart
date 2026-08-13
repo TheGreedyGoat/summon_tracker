@@ -2,40 +2,48 @@ import 'package:summon_tracker/models/simple_die_expression.dart';
 
 /// static class to handle mathematical expressions including veriables, dice expressions etc.
 class ExpressionService {
-  static const _varTagRegexp = r'\[.[^[\]]+\]';
-  static const _expTagRegexp = r'\{.[^{\}]+\}';
-  static const _invalidvatTagRegexp = r'\[.[^]]*\[.[^[]*]';
+  static const _varTagRegexp = r'\[[a-zA-z]*\]';
 
   /// A regular expression to detect tagged variables eg [DEX]
   static RegExp get varTagReg => RegExp(_varTagRegexp);
 
+  static const _expTagRegexp = r'\{.[^{\}]+\}';
+
   /// A regular expression to detect tagged expressions eg {[DEX] + 3}
   static RegExp get expTagReg => RegExp(_expTagRegexp);
 
-  /// WIP a regular expression to detect faulty regexp;
-  static RegExp get invalidTagReg => RegExp(_invalidvatTagRegexp);
+  static const _diceExpRegexp = r'[1-9][0-9]*d[1-9][0-9]*';
 
-  /// extracts all tagged expressions from [raw] eg {[DEX] + 3}
+  static RegExp get diceExpReg => RegExp(_diceExpRegexp);
+
+  static const _unBracketDiceExpRegexp =
+      r'(?<!\[)[1-9][0-9]*d[1-9][0-9]*(?!\])';
+  static RegExp get unBracketDiceExpReg => RegExp(_unBracketDiceExpRegexp);
+
+  static const _bracketDiceExpRegexp = r'\[[1-9][0-9]*d[1-9][0-9]*\]';
+  static RegExp get bracketsDiceExpReg => RegExp(_bracketDiceExpRegexp);
+
+  /// extracts all tagged expressions from [raw] eg {[DEX] + 3} as a List
   static List<String> scanForExpressions(String raw) => scanFor(
     raw,
     reg: expTagReg,
   );
 
-  /// extracts all tagged variables from [raw] eg [DEX] not including dice expressions
+  /// extracts all tagged variables from [raw] eg [DEX] not including dice expressions as a List
   static List<String> scanForVariables(String raw) => scanFor(
     raw,
     reg: varTagReg,
-    where: (exp) =>
-        SimpleDieExpression.tryParse(exp.substring(1, exp.length - 1)) == null,
   );
 
-  static List<String> sanForDiceExpressions(String raw) => scanFor(
-    raw,
-    reg: varTagReg,
-    where: (e) =>
-        SimpleDieExpression.tryParse(e.substring(1, e.length - 1)) != null,
-  );
+  /// extracts all tagged dice expressions from [raw] eg [2d6] as a List
+  static List<String> scanForDiceThrows(
+    String raw, [
+    bool Function(String)? where,
+  ]) => scanFor(raw, reg: diceExpReg, where: where);
 
+  /// returns all substrings of [raw] that fulfill [reg] as a list.
+  ///
+  /// Use [where] to filter the list further
   static List<String> scanFor(
     String raw, {
     required RegExp reg,
@@ -53,6 +61,49 @@ class ExpressionService {
         (exp) => where?.call(exp) ?? true,
       )
       .toList();
+
+  static String replaceDiceWithAv(String raw) {
+    final diceExpressions = diceExpReg.allMatches(raw).map(
+      (match) {
+        final dExp = raw.substring(match.start, match.end);
+        return SimpleDieExpression.fromString(dExp);
+      },
+    ).toList();
+    return diceExpressions.fold(
+      raw,
+      (previousValue, exp) {
+        return previousValue.replaceFirst(
+          exp.toDieString(),
+          exp.average.toString(),
+        );
+      },
+    );
+  }
+
+  static String wrapDiceExpressions(String raw) {
+    return scanForDiceThrows(raw).fold(
+      raw,
+      (previousValue, dExp) => previousValue.replaceFirst(dExp, '[$dExp]'),
+    );
+  }
+
+  static String unWrapDiceExpressions(String raw) {
+    return scanForDiceThrows(raw).fold(
+      raw,
+      (previousValue, dExp) => previousValue.replaceFirst('[$dExp]', dExp),
+    );
+  }
+
+  static String bracket(
+    String input, {
+    required String open,
+    required String close,
+  }) => '$open$input$close';
+  static String unBracket(
+    String input, {
+    required String open,
+    required String close,
+  }) => input.replaceAll(open, '').replaceAll(close, '');
 
   /// Simplyfies a mathematical expression
   ///
@@ -98,10 +149,14 @@ class ExpressionService {
     if (simplyfied.startsWith('+')) {
       simplyfied = simplyfied.substring(1);
     }
-    //
+    //!!!!!!!
     simplyfied = simplyfied.replaceAll(RegExp(r'(?<=[0-9])\*|\*(?=[0-9])'), '');
+
     return simplyfied;
-  }
+  } //? simplify
+
+  static String getMatchedSubstring(String input, RegExpMatch match) =>
+      input.substring(match.start, match.end);
 
   static String _sumConstantsOutsideParentheses(String expression) {
     // cancel out any multiplication by 1;
@@ -179,9 +234,4 @@ class ExpressionService {
 
   /// returns the average roll of a die that has the passed number of sides
   static double averageDie(int sides) => sides / 2 + 0.5;
-
-  /// takes in an expression containing constants and die expressions only
-  static int averageExpression(String expression) {
-    return 1;
-  }
 }

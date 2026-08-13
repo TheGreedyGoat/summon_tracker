@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$NumericExpression {
 
- String get expression;
+ String get raw;
 /// Create a copy of NumericExpression
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,12 +25,12 @@ $NumericExpressionCopyWith<NumericExpression> get copyWith => _$NumericExpressio
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NumericExpression&&(identical(other.expression, expression) || other.expression == expression));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NumericExpression&&(identical(other.raw, raw) || other.raw == raw));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,expression);
+int get hashCode => Object.hash(runtimeType,raw);
 
 
 
@@ -41,7 +41,7 @@ abstract mixin class $NumericExpressionCopyWith<$Res>  {
   factory $NumericExpressionCopyWith(NumericExpression value, $Res Function(NumericExpression) _then) = _$NumericExpressionCopyWithImpl;
 @useResult
 $Res call({
- String expression
+ String raw
 });
 
 
@@ -58,9 +58,9 @@ class _$NumericExpressionCopyWithImpl<$Res>
 
 /// Create a copy of NumericExpression
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? expression = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? raw = null,}) {
   return _then(NumericExpression._(
-expression: null == expression ? _self.expression : expression // ignore: cast_nullable_to_non_nullable
+raw: null == raw ? _self.raw : raw // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

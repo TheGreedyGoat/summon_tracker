@@ -11,10 +11,6 @@ class TemplateVariable {
     tVariables.add(this);
   }
 
-  SummonTemplate get template => SummonTemplate.templates.singleWhere(
-    (template) => template.id == templateID,
-  );
-
   VariableValue get variableValue => VariableValue.values.singleWhere(
     (value) => value.id == valueID,
   );

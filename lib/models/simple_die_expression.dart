@@ -21,8 +21,8 @@ class SimpleDieExpression {
     exp = exp.toLowerCase();
     final values = exp.split('d');
     return SimpleDieExpression(
-      sides: int.parse(values[0]),
-      diceCount: int.parse(values[1]),
+      diceCount: int.parse(values[0]),
+      sides: int.parse(values[1]),
     );
   }
 

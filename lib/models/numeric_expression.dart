@@ -1,19 +1,20 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:summon_tracker/services/expression_service.dart';
 part 'numeric_expression.freezed.dart';
 
 @freezed
 class NumericExpression with _$NumericExpression {
-  final String expression;
+  final String raw;
   const NumericExpression._({
-    required this.expression,
+    required this.raw,
   });
 
   static NumericExpression? tryParse(
     String expression,
   ) {
     final exp = NumericExpression._(
-      expression: expression,
+      raw: expression,
     );
 
     return exp.isValid ? exp : null;
@@ -21,7 +22,7 @@ class NumericExpression with _$NumericExpression {
 
   NumericExpression.constant(int value, String? name)
     : this._(
-        expression: value.toString(),
+        raw: value.toString(),
       );
 
   bool get isValid {
@@ -38,25 +39,11 @@ class NumericExpression with _$NumericExpression {
   }
 
   Set<String> get variableTags {
-    final re = RegExp(r'\[.{1,5}\]');
-    final matches = re.allMatches(expression).map((match) {
-      final substring = expression.substring(match.start + 1, match.end - 1);
-      // print('StatExpression.variableTags: $substring');
-      return substring;
-    });
-    return matches.map((e) => e.toString()).toSet();
-  }
-
-  Set<Variable> get variables {
-    return variableTags
-        .map(
-          (tag) => Variable(tag),
-        )
-        .toSet();
+    return ExpressionService.scanForVariables(raw).toSet();
   }
 
   String getFilledIn([Map<String, int>? variableValues]) {
-    String exp = expression.toString();
+    String exp = raw.toString();
     for (final varTag in variableTags) {
       exp = exp.replaceAll(
         '[$varTag]',
@@ -85,7 +72,7 @@ class NumericExpression with _$NumericExpression {
   }
 
   @override
-  String toString() => expression;
+  String toString() => raw;
 }
 
 class MissingVariableException implements Exception {

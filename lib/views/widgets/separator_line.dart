@@ -5,10 +5,13 @@ class SeparatorLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 2,
-      width: double.infinity,
-      child: DecoratedBox(decoration: BoxDecoration(color: Colors.black)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: SizedBox(
+        height: 2,
+        width: double.infinity,
+        child: DecoratedBox(decoration: BoxDecoration(color: Colors.black)),
+      ),
     );
   }
 }
