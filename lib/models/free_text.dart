@@ -48,9 +48,14 @@ class FreeText {
         final replaced = ExpressionService.replaceDiceWithAv(
           exp.substring(1, exp.length - 1),
         );
-        return MathNodeExpression.fromString(
-          replaced,
-        ).calc(MathVariableValues.none).floor();
+        try {
+          return MathNodeExpression.fromString(
+            replaced,
+          ).calc(MathVariableValues.none).floor();
+        } catch (e) {
+          print(e);
+          return exp;
+        }
       },
     ).toList();
 
@@ -101,4 +106,7 @@ class FreeText {
     );
     return filledIn;
   }
+
+  @override
+  String toString() => raw;
 }

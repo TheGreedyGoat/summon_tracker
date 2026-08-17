@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:math_parser/math_parser.dart';
 import 'package:summon_tracker/services/expression_service.dart';
 part 'numeric_expression.freezed.dart';
 
@@ -27,12 +28,11 @@ class NumericExpression with _$NumericExpression {
 
   bool get isValid {
     try {
-      ExpressionParser p = GrammarParser();
-      // ignore: unused_local_variable
-      final Expression exp = p.parse(getFilledIn());
-
+      MathNodeExpression.fromString(
+        getFilledIn(null, true),
+      ).calc(MathVariableValues.none);
       return true;
-    } on FormatException catch (e) {
+    } catch (e) {
       print(e);
       return false;
     }
@@ -42,12 +42,12 @@ class NumericExpression with _$NumericExpression {
     return ExpressionService.scanForVariables(raw).toSet();
   }
 
-  String getFilledIn([Map<String, int>? variableValues]) {
+  String getFilledIn([Map<String, int>? variableValues, bool insert1 = false]) {
     String exp = raw.toString();
     for (final varTag in variableTags) {
       exp = exp.replaceAll(
-        '[$varTag]',
-        (variableValues?[varTag] ?? 1).toString(),
+        varTag,
+        (variableValues?[varTag] ?? (insert1 ? 1 : varTag)).toString(),
       );
     }
     return exp;
@@ -83,5 +83,5 @@ class MissingVariableException implements Exception {
   ]);
 
   @override
-  String toString() => 'No value provided for variable name [$variableName]';
+  String toString() => 'No value provided for variable tag $variableName';
 }

@@ -4,16 +4,54 @@ erDiagram
         String id PK
         String HP
         String AC
-        String etc...
+        String prof
+        etc pp
+    }
 
-        
+    ABILITY{
+        String long PK
+        String short
+    }
+    ABILITY_SCORE{
+        String T_id PK, FK
+        String ability PK, FK
+        int proficient
+    }
+
+    SKILL{
+        String name PK
+        String ability FK
+    }
+    
+    SKILL_PROFICIENCY{
+        String T_id PK, FK
+        String skill PK, FK
+        int proficient
+    }
+
+    DAMAGE_TYPE{
+        String long
+        String short
+        int isMagical
+    }
+    DAMAGE_MODIFIER{
+        String T_id PK, FK
+        String damageType PK,FK
+        int modifier
+    }
+
+
+    FEATURE{
+        String T_id PK, FK
+        int type PK
+        String name PK
+        String description
     }
 
     SUMMON_INSTANCE{
         String id PK
         String T_id FK
     }
-
 
     INSTANCE_VARIABLE{
         String I_id PK,FK
@@ -35,6 +73,15 @@ erDiagram
     }
     SUMMON_TEMPLATE ||--o{ SUMMON_INSTANCE: has
     SUMMON_TEMPLATE ||--o{ TEMPLATE_VARIABLE: has
+    SUMMON_TEMPLATE ||--o{ SKILL_PROFICIENCY: has
+    SUMMON_TEMPLATE ||--o{ ABILITY_SCORE: has
+    SUMMON_TEMPLATE ||--o{ DAMAGE_MODIFIER: has
+    SUMMON_TEMPLATE ||--o{ FEATURE: has
+    ABILITY_SCORE ||--o{ ABILITY: "counts for"
+    SKILL_PROFICIENCY ||--o{ SKILL: "counts for"
+    ABILITY ||--o{ SKILL: "defines"
+    DAMAGE_MODIFIER ||--o{ DAMAGE_TYPE: modifies
+
     SUMMON_INSTANCE ||--o{ INSTANCE_VARIABLE: contains
     INSTANCE_VARIABLE ||--|| VARIABLE : is
     TEMPLATE_VARIABLE ||--|| VARIABLE : is

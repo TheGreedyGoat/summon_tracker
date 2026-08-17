@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:summon_tracker/models/numeric_expression.dart';
-import 'package:summon_tracker/views/pages/template_edit/edit_decoration.dart';
+import 'package:summon_tracker/views/styling/text_styles.dart';
+import 'package:summon_tracker/views/widgets/template_editing/edit_decoration.dart';
 
 class NumericExpressionFormfield extends StatefulWidget {
   final bool isRequired;
@@ -29,8 +30,12 @@ class _NumericExpressionFormfieldState
     return EditWrapper(
       child: TextFormField(
         initialValue: widget.initialValue,
-        decoration: editInputDecoration.copyWith(
+        decoration: InputDecoration(
           label: widget.label != null ? Text(widget.label!) : null,
+          hint: Text(
+            '[X] + 3',
+            style: hintStyle,
+          ),
         ),
         onChanged: widget.onChanged,
         validator: (value) {
@@ -38,7 +43,7 @@ class _NumericExpressionFormfieldState
             return 'required';
           }
 
-          return _validateNumeric(value) ? null : 'invalid';
+          return _validateNumeric(value) ? null : 'invalid expression';
         },
       ),
     );

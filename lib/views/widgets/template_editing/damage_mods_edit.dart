@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:my_utils/widgets/multi_choice_button.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
-import 'package:summon_tracker/services/rulebook.dart';
+import 'package:summon_tracker/models/damage_mod.dart';
 
 /// Widget to edit damage resitances, vulnerabilities etc.
 class DamageModsEdit extends ConsumerStatefulWidget {

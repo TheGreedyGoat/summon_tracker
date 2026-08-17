@@ -14,5 +14,3 @@ class EditWrapper extends StatelessWidget {
     );
   }
 }
-
-final editInputDecoration = InputDecoration();

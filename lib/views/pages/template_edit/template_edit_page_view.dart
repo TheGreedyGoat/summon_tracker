@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:summon_tracker/notifiers/fab_notifier.dart';
+import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_0.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_1.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_2.dart';
+import 'package:summon_tracker/views/pages/template_edit/fillin_vars_page.dart';
 
+/// The parent widget to create a new or edit an existing smmon template.
+///
+///
 class TemplateEditPageView extends ConsumerStatefulWidget {
   const TemplateEditPageView({super.key});
 
@@ -25,26 +29,28 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => ref
-          .read(fabProvider.notifier)
-          .set(
-            FabState(
-              onPressed: () {
-                _globalKey.currentState?.validate();
-              },
-              icon: Icons.save,
-              child: FabState(
-                onPressed: () {},
-                icon: CupertinoIcons.textformat_abc,
-              ),
-            ),
-          ),
-    );
+  }
+
+  void _onSavePressed(EditTemplateState state) {
+    if (!(_globalKey.currentState?.validate() ?? false)) {
+      return;
+    }
+    if (state.validateVariables() != null) {
+      _toVariables();
+      return;
+    }
+
+    try {
+      print(state.toTemplate());
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(editTemplateProvider);
+    print(state.variableState);
     return Column(
       children: [
         DecoratedBox(
@@ -56,9 +62,12 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
                 spacing: 8.0,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Icon(Icons.save)),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => _onSavePressed(state),
+                    child: Icon(Icons.save),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _toVariables(),
                     child: Icon(CupertinoIcons.textformat_abc_dottedunderline),
                   ),
                 ],
@@ -69,7 +78,12 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
                   for (int i = 0; i < pages.length; i++)
                     Center(
                       child: ElevatedButton(
-                        onPressed: () => _pageController.jumpToPage(i),
+                        onPressed: () => _pageController.animateToPage(
+                          i,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeIn,
+                        ),
+                        //  _pageController.jumpToPage(i),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _currentPage == i
                               ? Colors.tealAccent
@@ -114,5 +128,20 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
     setState(() {
       _currentPage = value;
     });
+  }
+
+  void _toVariables() {
+    Navigator.of(
+      context,
+    ).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text('Edit Variables'),
+          ),
+          body: FillinVarsPage(),
+        ),
+      ),
+    );
   }
 }

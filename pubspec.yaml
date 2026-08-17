@@ -19,6 +19,8 @@ dependencies:
   uuid: ^4.6.0
   my_utils:
     git: https://github.com/TheGreedyGoat/my_utils.git
+  sqflite: ^2.4.3
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

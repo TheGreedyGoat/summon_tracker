@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:summon_tracker/models/action_feature.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
-import 'package:summon_tracker/services/rulebook.dart';
+import 'package:summon_tracker/models/damage_mod.dart';
 import 'package:summon_tracker/views/widgets/separator_title.dart';
 import 'package:summon_tracker/views/widgets/template_editing/free_text_formfield.dart';
+import 'package:summon_tracker/views/widgets/template_editing/my_text_field.dart';
 
 class EditPage2 extends ConsumerStatefulWidget {
   const EditPage2({super.key});
@@ -48,10 +50,10 @@ class _EditPage2State extends ConsumerState<EditPage2> {
 
   Widget _section({
     required String title,
-    required List<ActionAbility> actionAbilities,
+    required List<ActionFeature> actionAbilities,
     required EditTemplateState Function(
       EditTemplateState state,
-      List<ActionAbility> list,
+      List<ActionFeature> list,
     )
     setList,
   }) => Column(
@@ -62,7 +64,7 @@ class _EditPage2State extends ConsumerState<EditPage2> {
           onPressed: () {
             setState(() {
               actionAbilities.add(
-                ActionAbility(name: '...', description: '...'),
+                ActionFeature(name: '', description: ''),
               );
               update(
                 (state) => setList(state, actionAbilities),
@@ -79,12 +81,15 @@ class _EditPage2State extends ConsumerState<EditPage2> {
             Row(
               children: [
                 Expanded(
-                  child: FreeTextFormfield(
+                  child: MyTextField(
+                    label: 'Name',
+                    isRequired: true,
                     initialValue: aa.name,
-                    isRequired: false,
                     onChanged: (value) {},
-                    onSaved: (value) {},
                   ),
+                  //  FreeTextFormfield(
+                  //   onSaved: (value) {},
+                  // ),
                 ),
                 IconButton(
                   onPressed: () {

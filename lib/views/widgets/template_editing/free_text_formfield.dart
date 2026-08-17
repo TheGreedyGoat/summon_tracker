@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:summon_tracker/views/pages/template_edit/edit_decoration.dart';
+import 'package:summon_tracker/views/widgets/template_editing/edit_decoration.dart';
 
 class FreeTextFormfield extends StatefulWidget {
   final bool isRequired;
@@ -33,14 +33,18 @@ class _FreeTextFormfieldState extends State<FreeTextFormfield> {
 
         minLines: widget.isMultiline ? 3 : null,
         maxLines: widget.isMultiline ? null : 1,
-        decoration: editInputDecoration.copyWith(
+        decoration: InputDecoration(
           label: widget.label != null ? Text(widget.label!) : null,
           suffixIcon: widget.suffix,
+          hint: Text(
+            'abc {[X] + 3} 1d6',
+            style: TextStyle(color: Colors.black.withAlpha(100)),
+          ),
         ),
         onChanged: widget.onChanged,
         onSaved: widget.onSaved,
         validator: (value) {
-          if (value == null || value.replaceAll(' ', '').isEmpty) {
+          if (widget.isRequired && (value == null || value.trim().isEmpty)) {
             return 'required';
           }
 

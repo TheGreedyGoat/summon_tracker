@@ -16,7 +16,6 @@ class WidgetTree extends ConsumerWidget {
           var current = fabState;
           final states = List<FloatingActionButton>.empty(growable: true);
           while (current != null) {
-            print('umm');
             states.add(
               FloatingActionButton(
                 mini: true,
@@ -27,7 +26,7 @@ class WidgetTree extends ConsumerWidget {
             current = current.child;
           }
 
-          return Column(
+          return Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: states,
           );

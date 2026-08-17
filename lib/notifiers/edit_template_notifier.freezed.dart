@@ -15,9 +15,9 @@ T _$identity<T>(T value) => value;
 mixin _$EditTemplateState {
 
  String get name; String get armorClass; String get hitPoints; String get speed; String get senses; String get languages; String get proficiencyBonus; List<DamageModifier> get damageMods;// Ability Scores + Save profs
- List<AbilityScoreString> get abilityScores;// skills
+ List<AbilityScore> get abilityScores;// skills
  List<SkillProficiency> get skillProficiencies;// Free Texts
- List<ActionAbility> get featureAbilities; List<ActionAbility> get actions; List<ActionAbility> get bonusActions; List<ActionAbility> get reactions;
+ List<ActionFeature> get featureAbilities; List<ActionFeature> get actions; List<ActionFeature> get bonusActions; List<ActionFeature> get reactions; Map<String, String> get variableState; Map<String, String> get variableNames;
 /// Create a copy of EditTemplateState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $EditTemplateStateCopyWith<EditTemplateState> get copyWith => _$EditTemplateStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditTemplateState&&(identical(other.name, name) || other.name == name)&&(identical(other.armorClass, armorClass) || other.armorClass == armorClass)&&(identical(other.hitPoints, hitPoints) || other.hitPoints == hitPoints)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.senses, senses) || other.senses == senses)&&(identical(other.languages, languages) || other.languages == languages)&&(identical(other.proficiencyBonus, proficiencyBonus) || other.proficiencyBonus == proficiencyBonus)&&const DeepCollectionEquality().equals(other.damageMods, damageMods)&&const DeepCollectionEquality().equals(other.abilityScores, abilityScores)&&const DeepCollectionEquality().equals(other.skillProficiencies, skillProficiencies)&&const DeepCollectionEquality().equals(other.featureAbilities, featureAbilities)&&const DeepCollectionEquality().equals(other.actions, actions)&&const DeepCollectionEquality().equals(other.bonusActions, bonusActions)&&const DeepCollectionEquality().equals(other.reactions, reactions));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EditTemplateState&&(identical(other.name, name) || other.name == name)&&(identical(other.armorClass, armorClass) || other.armorClass == armorClass)&&(identical(other.hitPoints, hitPoints) || other.hitPoints == hitPoints)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.senses, senses) || other.senses == senses)&&(identical(other.languages, languages) || other.languages == languages)&&(identical(other.proficiencyBonus, proficiencyBonus) || other.proficiencyBonus == proficiencyBonus)&&const DeepCollectionEquality().equals(other.damageMods, damageMods)&&const DeepCollectionEquality().equals(other.abilityScores, abilityScores)&&const DeepCollectionEquality().equals(other.skillProficiencies, skillProficiencies)&&const DeepCollectionEquality().equals(other.featureAbilities, featureAbilities)&&const DeepCollectionEquality().equals(other.actions, actions)&&const DeepCollectionEquality().equals(other.bonusActions, bonusActions)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&const DeepCollectionEquality().equals(other.variableState, variableState)&&const DeepCollectionEquality().equals(other.variableNames, variableNames));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,armorClass,hitPoints,speed,senses,languages,proficiencyBonus,const DeepCollectionEquality().hash(damageMods),const DeepCollectionEquality().hash(abilityScores),const DeepCollectionEquality().hash(skillProficiencies),const DeepCollectionEquality().hash(featureAbilities),const DeepCollectionEquality().hash(actions),const DeepCollectionEquality().hash(bonusActions),const DeepCollectionEquality().hash(reactions));
+int get hashCode => Object.hash(runtimeType,name,armorClass,hitPoints,speed,senses,languages,proficiencyBonus,const DeepCollectionEquality().hash(damageMods),const DeepCollectionEquality().hash(abilityScores),const DeepCollectionEquality().hash(skillProficiencies),const DeepCollectionEquality().hash(featureAbilities),const DeepCollectionEquality().hash(actions),const DeepCollectionEquality().hash(bonusActions),const DeepCollectionEquality().hash(reactions),const DeepCollectionEquality().hash(variableState),const DeepCollectionEquality().hash(variableNames));
 
 @override
 String toString() {
-  return 'EditTemplateState(name: $name, armorClass: $armorClass, hitPoints: $hitPoints, speed: $speed, senses: $senses, languages: $languages, proficiencyBonus: $proficiencyBonus, damageMods: $damageMods, abilityScores: $abilityScores, skillProficiencies: $skillProficiencies, featureAbilities: $featureAbilities, actions: $actions, bonusActions: $bonusActions, reactions: $reactions)';
+  return 'EditTemplateState(name: $name, armorClass: $armorClass, hitPoints: $hitPoints, speed: $speed, senses: $senses, languages: $languages, proficiencyBonus: $proficiencyBonus, damageMods: $damageMods, abilityScores: $abilityScores, skillProficiencies: $skillProficiencies, featureAbilities: $featureAbilities, actions: $actions, bonusActions: $bonusActions, reactions: $reactions, variableState: $variableState, variableNames: $variableNames)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $EditTemplateStateCopyWith<$Res>  {
   factory $EditTemplateStateCopyWith(EditTemplateState value, $Res Function(EditTemplateState) _then) = _$EditTemplateStateCopyWithImpl;
 @useResult
 $Res call({
- String name, String armorClass, String hitPoints, String speed, String senses, String languages, String proficiencyBonus, List<DamageModifier> damageMods, List<AbilityScoreString> abilityScores, List<SkillProficiency> skillProficiencies, List<ActionAbility> featureAbilities, List<ActionAbility> actions, List<ActionAbility> bonusActions, List<ActionAbility> reactions
+ String name, String armorClass, String hitPoints, String speed, String senses, String languages, String proficiencyBonus, List<DamageModifier> damageMods, List<AbilityScore> abilityScores, List<SkillProficiency> skillProficiencies, List<ActionFeature> featureAbilities, List<ActionFeature> actions, List<ActionFeature> bonusActions, List<ActionFeature> reactions, Map<String, String> variableState, Map<String, String> variableNames
 });
 
 
@@ -65,7 +65,7 @@ class _$EditTemplateStateCopyWithImpl<$Res>
 
 /// Create a copy of EditTemplateState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? armorClass = null,Object? hitPoints = null,Object? speed = null,Object? senses = null,Object? languages = null,Object? proficiencyBonus = null,Object? damageMods = null,Object? abilityScores = null,Object? skillProficiencies = null,Object? featureAbilities = null,Object? actions = null,Object? bonusActions = null,Object? reactions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? armorClass = null,Object? hitPoints = null,Object? speed = null,Object? senses = null,Object? languages = null,Object? proficiencyBonus = null,Object? damageMods = null,Object? abilityScores = null,Object? skillProficiencies = null,Object? featureAbilities = null,Object? actions = null,Object? bonusActions = null,Object? reactions = null,Object? variableState = null,Object? variableNames = null,}) {
   return _then(EditTemplateState(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,armorClass: null == armorClass ? _self.armorClass : armorClass // ignore: cast_nullable_to_non_nullable
@@ -76,12 +76,14 @@ as String,languages: null == languages ? _self.languages : languages // ignore: 
 as String,proficiencyBonus: null == proficiencyBonus ? _self.proficiencyBonus : proficiencyBonus // ignore: cast_nullable_to_non_nullable
 as String,damageMods: null == damageMods ? _self.damageMods : damageMods // ignore: cast_nullable_to_non_nullable
 as List<DamageModifier>,abilityScores: null == abilityScores ? _self.abilityScores : abilityScores // ignore: cast_nullable_to_non_nullable
-as List<AbilityScoreString>,skillProficiencies: null == skillProficiencies ? _self.skillProficiencies : skillProficiencies // ignore: cast_nullable_to_non_nullable
+as List<AbilityScore>,skillProficiencies: null == skillProficiencies ? _self.skillProficiencies : skillProficiencies // ignore: cast_nullable_to_non_nullable
 as List<SkillProficiency>,featureAbilities: null == featureAbilities ? _self.featureAbilities : featureAbilities // ignore: cast_nullable_to_non_nullable
-as List<ActionAbility>,actions: null == actions ? _self.actions : actions // ignore: cast_nullable_to_non_nullable
-as List<ActionAbility>,bonusActions: null == bonusActions ? _self.bonusActions : bonusActions // ignore: cast_nullable_to_non_nullable
-as List<ActionAbility>,reactions: null == reactions ? _self.reactions : reactions // ignore: cast_nullable_to_non_nullable
-as List<ActionAbility>,
+as List<ActionFeature>,actions: null == actions ? _self.actions : actions // ignore: cast_nullable_to_non_nullable
+as List<ActionFeature>,bonusActions: null == bonusActions ? _self.bonusActions : bonusActions // ignore: cast_nullable_to_non_nullable
+as List<ActionFeature>,reactions: null == reactions ? _self.reactions : reactions // ignore: cast_nullable_to_non_nullable
+as List<ActionFeature>,variableState: null == variableState ? _self.variableState : variableState // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,variableNames: null == variableNames ? _self.variableNames : variableNames // ignore: cast_nullable_to_non_nullable
+as Map<String, String>,
   ));
 }
 

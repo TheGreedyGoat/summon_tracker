@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:my_utils/my_utils.dart';
+import 'package:summon_tracker/models/skill.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
-import 'package:summon_tracker/services/rulebook.dart';
+import 'package:summon_tracker/models/damage_mod.dart';
 
 class SkillsEdit extends ConsumerStatefulWidget {
   const SkillsEdit({super.key});
