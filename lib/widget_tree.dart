@@ -1,37 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:summon_tracker/notifiers/fab_notifier.dart';
-import 'package:summon_tracker/views/pages/template_edit/template_edit_page_view.dart';
+import 'package:summon_tracker/notifiers/widget_tree_state.dart';
+import 'package:summon_tracker/views/pages/template_overview.dart';
 
 class WidgetTree extends ConsumerWidget {
   const WidgetTree({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final fabState = ref.watch(fabProvider);
+    final wtState = ref.watch(wtProvider);
     return Scaffold(
-      body: SafeArea(child: TemplateEditPageView()),
-      floatingActionButton: Builder(
-        builder: (context) {
-          var current = fabState;
-          final states = List<FloatingActionButton>.empty(growable: true);
-          while (current != null) {
-            states.add(
-              FloatingActionButton(
-                mini: true,
-                onPressed: current.onPressed,
-                child: Icon(current.icon),
-              ),
-            );
-            current = current.child;
-          }
-
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: states,
-          );
-        },
-      ),
+      body: SafeArea(child: wtState.body),
+      floatingActionButton: wtState.floatingActionbutton,
     );
   }
 }

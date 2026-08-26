@@ -5,49 +5,48 @@ import 'package:summon_tracker/models/damage_mod.dart';
 part 'skill.freezed.dart';
 
 enum CoreSkill {
-  acrobatics(ability: CoreAbility.dex, long: 'Acrobatics', short: 'Acro'),
-  animalHandling(
-    ability: CoreAbility.wis,
-    long: 'Animal Handling',
-    short: 'AniHan',
-  ),
-  arcana(ability: CoreAbility.int, long: 'Arcana', short: 'Arc'),
-  athletics(ability: CoreAbility.str, long: 'Athletics', short: 'Ath'),
-  deception(ability: CoreAbility.cha, long: 'Deception', short: 'Dec'),
-  history(ability: CoreAbility.int, long: 'History', short: 'Hist'),
-  insight(ability: CoreAbility.wis, long: 'Insight', short: 'Ins'),
-  intimidation(ability: CoreAbility.cha, long: 'Intimidation', short: 'Intim'),
-  investigation(ability: CoreAbility.int, long: 'Investigation', short: 'Inv'),
-  medicine(ability: CoreAbility.wis, long: 'Medicine', short: 'Med'),
-  nature(ability: CoreAbility.int, long: 'Nature', short: 'Nat'),
-  perception(ability: CoreAbility.wis, long: 'Perception', short: 'Perc'),
-  performance(ability: CoreAbility.cha, long: 'Performance', short: 'Perf'),
-  persuasion(ability: CoreAbility.cha, long: 'Persuasion', short: 'Pers'),
-  religion(ability: CoreAbility.int, long: 'Religion', short: 'Rel'),
-  sleightOfHand(
-    ability: CoreAbility.dex,
-    long: 'Sleight of Hand',
-    short: 'Sleig',
-  ),
-  stealth(ability: CoreAbility.dex, long: 'Stealth', short: 'Steal'),
-  survival(ability: CoreAbility.wis, long: 'Survival', short: 'Surv');
+  acrobatics(ability: Ability.dex, long: 'Acrobatics'),
+  animalHandling(ability: Ability.wis, long: 'Animal Handling'),
+  arcana(ability: Ability.int, long: 'Arcana'),
+  athletics(ability: Ability.str, long: 'Athletics'),
+  deception(ability: Ability.cha, long: 'Deception'),
+  history(ability: Ability.int, long: 'History'),
+  insight(ability: Ability.wis, long: 'Insight'),
+  intimidation(ability: Ability.cha, long: 'Intimidation'),
+  investigation(ability: Ability.int, long: 'Investigation'),
+  medicine(ability: Ability.wis, long: 'Medicine'),
+  nature(ability: Ability.int, long: 'Nature'),
+  perception(ability: Ability.wis, long: 'Perception'),
+  performance(ability: Ability.cha, long: 'Performance'),
+  persuasion(ability: Ability.cha, long: 'Persuasion'),
+  religion(ability: Ability.int, long: 'Religion'),
+  sleightOfHand(ability: Ability.dex, long: 'Sleight of Hand'),
+  stealth(ability: Ability.dex, long: 'Stealth'),
+  survival(ability: Ability.wis, long: 'Survival');
 
-  final CoreAbility ability;
+  final Ability ability;
   final String long;
-  final String short;
+
+  Skill get skill => Skill(name: long, ability: ability);
   const CoreSkill({
     required this.ability,
     required this.long,
-    required this.short,
   });
+}
+
+class Skill {
+  final String name;
+  final Ability ability;
+
+  Skill({required this.name, required this.ability});
 }
 
 @freezed
 class SkillProficiency with _$SkillProficiency {
-  final String skillName;
+  final Skill skill;
   final Proficiency prof;
 
-  SkillProficiency({required this.skillName, required this.prof});
+  SkillProficiency({required this.skill, required this.prof});
 }
 
 enum Proficiency {

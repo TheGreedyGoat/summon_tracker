@@ -6,6 +6,7 @@ import 'package:summon_tracker/models/free_text.dart';
 import 'package:summon_tracker/models/numeric_expression.dart';
 import 'package:summon_tracker/models/skill.dart';
 import 'package:summon_tracker/models/summon_template.dart';
+import 'package:summon_tracker/models/variable.dart';
 import 'package:summon_tracker/services/expression_service.dart';
 import 'package:summon_tracker/models/damage_mod.dart';
 
@@ -190,7 +191,7 @@ class EditTemplateState with _$EditTemplateState {
     return validateVariables() == null && validateNumerics();
   }
 
-  AbilityScore getAbility(CoreAbility ab) => abilityScores.firstWhere(
+  AbilityScore getAbility(Ability ab) => abilityScores.firstWhere(
     (element) => element.ability == ab,
   );
 
@@ -206,32 +207,14 @@ class EditTemplateState with _$EditTemplateState {
       languages: FreeText(raw: languages),
       proficiencyBonus: NumericExpression.tryParse(proficiencyBonus)!,
       damageMods: damageMods,
-      strengthScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.str).score,
-      )!,
-      strengthSave: getAbility(CoreAbility.str).proficiency,
-      dexterityScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.dex).score,
-      )!,
-      dexteritySave: getAbility(CoreAbility.dex).proficiency,
-      constitutionScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.con).score,
-      )!,
-      constitutionSave: getAbility(CoreAbility.con).proficiency,
-      intelligenceScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.int).score,
-      )!,
-      intelligenceSave: getAbility(CoreAbility.int).proficiency,
-      wisdomScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.wis).score,
-      )!,
-      wisdomSave: getAbility(CoreAbility.wis).proficiency,
-      charismaScore: NumericExpression.tryParse(
-        getAbility(CoreAbility.cha).score,
-      )!,
-      charismaSave: getAbility(CoreAbility.cha).proficiency,
+      strengthScore: getAbility(Ability.str).asNumeric!,
+      dexterityScore: getAbility(Ability.dex).asNumeric!,
+      constitutionScore: getAbility(Ability.con).asNumeric!,
+      intelligenceScore: getAbility(Ability.int).asNumeric!,
+      wisdomScore: getAbility(Ability.wis).asNumeric!,
+      charismaScore: getAbility(Ability.cha).asNumeric!,
       skillProficiencies: skillProficiencies,
-      abilities: featureAbilities,
+      featAbilities: featureAbilities,
       bonusActions: bonusActions,
       reactions: reactions,
       actions: actions,
@@ -239,13 +222,19 @@ class EditTemplateState with _$EditTemplateState {
     );
   }
 
-  Map<String, int> get tVariables {
-    final result = <String, int>{};
+  List<MyVariable> get tVariables {
+    final result = List<MyVariable>.empty(growable: true);
     variableState.forEach(
       (tag, value) {
         int? number = int.tryParse(value);
         if (number != null) {
-          result[tag] = number;
+          result.add(
+            MyVariable(
+              displayName: variableNames[tag] ?? '404',
+              tag: tag,
+              value: number,
+            ),
+          );
         }
       },
     );
@@ -268,21 +257,23 @@ class EditTemplateNotifier extends Notifier<EditTemplateState> {
   EditTemplateState get blank => EditTemplateState(
     name: 'Paul',
     armorClass: '16',
-    hitPoints: '[X]',
+    hitPoints: '36',
     speed: '30 ft',
     senses: '',
     languages: '',
     proficiencyBonus: '4',
     damageMods: BaseDamageType.values
         .map(
-          (type) =>
-              DamageModifier(damageType: type.name, damageMod: DamageMod.none),
+          (type) => DamageModifier(
+            damageType: type.getDmgType(),
+            damageMod: DamageMod.none,
+          ),
         )
         .toList(),
-    abilityScores: CoreAbility.values.map(
+    abilityScores: Ability.values.map(
       (a) {
         return AbilityScore(
-          ability: a.ability,
+          ability: a,
           score: '10',
           proficiency: Proficiency.none,
         );
@@ -290,8 +281,8 @@ class EditTemplateNotifier extends Notifier<EditTemplateState> {
     ).toList(),
     skillProficiencies: CoreSkill.values
         .map(
-          (skill) =>
-              SkillProficiency(skillName: skill.long, prof: Proficiency.none),
+          (coreSkill) =>
+              SkillProficiency(skill: coreSkill.skill, prof: Proficiency.none),
         )
         .toList(),
     featureAbilities: [

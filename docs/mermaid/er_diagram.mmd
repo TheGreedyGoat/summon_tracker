@@ -8,13 +8,13 @@ erDiagram
         etc pp
     }
 
-    ABILITY{
-        String long PK
-        String short
-    }
+    %% ABILITY{
+    %%     String long PK
+    %%     String short
+    %% }
     ABILITY_SCORE{
         String T_id PK, FK
-        String ability PK, FK
+        String ability PK
         int proficient
     }
 
@@ -77,9 +77,9 @@ erDiagram
     SUMMON_TEMPLATE ||--o{ ABILITY_SCORE: has
     SUMMON_TEMPLATE ||--o{ DAMAGE_MODIFIER: has
     SUMMON_TEMPLATE ||--o{ FEATURE: has
-    ABILITY_SCORE ||--o{ ABILITY: "counts for"
+    %% ABILITY_SCORE ||--o{ ABILITY: "counts for"
     SKILL_PROFICIENCY ||--o{ SKILL: "counts for"
-    ABILITY ||--o{ SKILL: "defines"
+    %% ABILITY ||--o{ SKILL: "defines"
     DAMAGE_MODIFIER ||--o{ DAMAGE_TYPE: modifies
 
     SUMMON_INSTANCE ||--o{ INSTANCE_VARIABLE: contains

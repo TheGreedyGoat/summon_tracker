@@ -1,23 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:summon_tracker/models/numeric_expression.dart';
 import 'package:summon_tracker/models/skill.dart';
 import 'package:summon_tracker/models/damage_mod.dart';
 
 part 'ability.freezed.dart';
 
-class Ability {
-  final String longName;
-  final String short;
-
-  Ability({required this.longName, required this.short});
-
-  @override
-  bool operator ==(Object other) =>
-      other is Ability && other.longName == longName;
-
-  @override
-  int get hashCode => Object.hash('ability', longName);
-}
-
+/// An ability score representation using a String as the score. Score may not be evaluateable
 @freezed
 class AbilityScore with _$AbilityScore {
   @override
@@ -27,25 +15,63 @@ class AbilityScore with _$AbilityScore {
   @override
   final Proficiency proficiency;
 
+  /// An ability score representation using a String as the score. Score may not be evaluateable
   AbilityScore({
+    required this.ability,
+    required this.score,
+    required this.proficiency,
+  });
+
+  /// returns a corresponding [AbilityScoreNum] if [score] is evaluateable
+  AbilityScoreNum? get asNumeric {
+    final score = NumericExpression.tryParse(this.score);
+    return score == null
+        ? null
+        : AbilityScoreNum(
+            ability: ability,
+            score: score,
+            proficiency: proficiency,
+          );
+  }
+}
+
+/// An ability score representation using a Num Exp as the score.
+class AbilityScoreNum {
+  final Ability ability;
+  final NumericExpression score;
+  final Proficiency proficiency;
+
+  AbilityScoreNum({
     required this.ability,
     required this.score,
     required this.proficiency,
   });
 }
 
-enum CoreAbility {
-  str(long: 'Strength', short: 'STR'),
-  dex(long: 'Dexterity', short: 'DEX'),
-  con(long: 'Constitution', short: 'CON'),
-  int(long: 'Intelligence', short: 'INT'),
-  wis(long: 'Wisdom', short: 'WIS'),
-  cha(long: 'Charisma', short: 'CHA');
+enum Ability {
+  str(
+    long: 'Strength',
+  ),
+  dex(
+    long: 'Dexterity',
+  ),
+  con(
+    long: 'Constitution',
+  ),
+  int(
+    long: 'Intelligence',
+  ),
+  wis(
+    long: 'Wisdom',
+  ),
+  cha(
+    long: 'Charisma',
+  );
 
   final String long;
-  final String short;
+  String get short => long.substring(0, 3).toUpperCase();
 
-  Ability get ability => Ability(longName: long, short: short);
-
-  const CoreAbility({required this.long, required this.short});
+  const Ability({
+    required this.long,
+  });
 }

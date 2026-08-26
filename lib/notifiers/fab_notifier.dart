@@ -3,33 +3,32 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 typedef ButtonCallback = void Function();
 
-final fabProvider = NotifierProvider(
+final abProvider = NotifierProvider(
   () => FaBNotifier(),
 );
 
 class FabState {
-  final ButtonCallback onPressed;
-  final IconData icon;
-  final FabState? child;
+  final Widget? fab;
+  FabState({this.fab});
 
-  FabState({required this.onPressed, required this.icon, this.child});
-
-  bool get hasChild => child != null;
-
-  @override
-  bool operator ==(Object other) =>
-      other is FabState &&
-      other.onPressed == onPressed &&
-      other.icon == icon &&
-      other.child == child;
+  factory FabState.icon({IconData? icon, required void Function() onPressed}) =>
+      FabState(
+        fab: IconButton(onPressed: onPressed, icon: Icon(icon)),
+      );
 
   @override
-  int get hashCode => Object.hash(onPressed, icon, child);
+  bool operator ==(Object other) => other is FabState && other.fab == fab;
+
+  @override
+  int get hashCode => Object.hash(
+    'fab',
+    fab,
+  );
 }
 
-class FaBNotifier extends Notifier<FabState?> {
+class FaBNotifier extends Notifier<FabState> {
   @override
-  FabState? build() => null;
+  FabState build() => FabState();
 
-  void set(FabState? next) => state = next;
+  void set(Widget? next) => state = FabState(fab: next);
 }

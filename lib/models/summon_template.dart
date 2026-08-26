@@ -1,8 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:summon_tracker/models/ability.dart';
 import 'package:summon_tracker/models/action_feature.dart';
 import 'package:summon_tracker/models/free_text.dart';
 import 'package:summon_tracker/models/numeric_expression.dart';
 import 'package:summon_tracker/models/skill.dart';
+import 'package:summon_tracker/models/variable.dart';
 import 'package:summon_tracker/services/database/data_base_tables.dart';
 import 'package:summon_tracker/models/damage_mod.dart';
 import 'package:summon_tracker/services/summon_service.dart';
@@ -37,29 +39,17 @@ class SummonTemplate with _$SummonTemplate {
   final List<DamageModifier> damageMods;
   // Ability Scores + Save profs
   @override
-  final NumericExpression strengthScore;
+  final AbilityScoreNum strengthScore;
   @override
-  final Proficiency strengthSave;
+  final AbilityScoreNum dexterityScore;
   @override
-  final NumericExpression dexterityScore;
+  final AbilityScoreNum constitutionScore;
   @override
-  final Proficiency dexteritySave;
+  final AbilityScoreNum intelligenceScore;
   @override
-  final NumericExpression constitutionScore;
+  final AbilityScoreNum wisdomScore;
   @override
-  final Proficiency constitutionSave;
-  @override
-  final NumericExpression intelligenceScore;
-  @override
-  final Proficiency intelligenceSave;
-  @override
-  final NumericExpression wisdomScore;
-  @override
-  final Proficiency wisdomSave;
-  @override
-  final NumericExpression charismaScore;
-  @override
-  final Proficiency charismaSave;
+  final AbilityScoreNum charismaScore;
 
   // skills
   @override
@@ -67,15 +57,22 @@ class SummonTemplate with _$SummonTemplate {
 
   // Features
   @override
-  final List<ActionFeature> abilities;
+  final List<ActionFeature> featAbilities;
   @override
   final List<ActionFeature> actions;
   @override
   final List<ActionFeature> bonusActions;
   @override
   final List<ActionFeature> reactions;
-
-  final Map<String, int> templateVariables;
+  @override
+  List<List<ActionFeature>> get featuresCompact => [
+    featAbilities,
+    actions,
+    bonusActions,
+    reactions,
+  ];
+  @override
+  final List<MyVariable> templateVariables;
 
   SummonTemplate({
     String? id,
@@ -88,19 +85,13 @@ class SummonTemplate with _$SummonTemplate {
     required this.proficiencyBonus,
     required this.damageMods,
     required this.strengthScore,
-    required this.strengthSave,
     required this.dexterityScore,
-    required this.dexteritySave,
     required this.constitutionScore,
-    required this.constitutionSave,
     required this.intelligenceScore,
-    required this.intelligenceSave,
     required this.wisdomScore,
-    required this.wisdomSave,
     required this.charismaScore,
-    required this.charismaSave,
     required this.skillProficiencies,
-    required this.abilities,
+    required this.featAbilities,
     required this.bonusActions,
     required this.reactions,
     required this.templateVariables,
@@ -111,7 +102,8 @@ class SummonTemplate with _$SummonTemplate {
   }
 
   Map<String, String> get coreMap => {
-    c_id: id,
+    c_T_id: id,
+    c_t_name: name,
     c_hit_points: hitPoints.toString(),
     c_armor_class: armorClass.toString(),
     c_speed: speed.toString(),
@@ -120,8 +112,14 @@ class SummonTemplate with _$SummonTemplate {
     c_proficiency_bonus: proficiencyBonus.toString(),
   };
 
-  //todo
-  Map<String, dynamic> get abilityMap => {};
+  List<AbilityScoreNum> get abilityScores => [
+    strengthScore,
+    dexterityScore,
+    constitutionScore,
+    intelligenceScore,
+    wisdomScore,
+    charismaScore,
+  ];
 
   Set<String> get variableTags {
     Set<String> tags = {};
@@ -131,18 +129,24 @@ class SummonTemplate with _$SummonTemplate {
     tags.addAll(senses.variableTags);
     tags.addAll(languages.variableTags);
     tags.addAll(proficiencyBonus.variableTags);
-    tags.addAll(strengthScore.variableTags);
-    tags.addAll(dexterityScore.variableTags);
-    tags.addAll(constitutionScore.variableTags);
-    tags.addAll(intelligenceScore.variableTags);
-    tags.addAll(wisdomScore.variableTags);
-    tags.addAll(charismaScore.variableTags);
+    tags.addAll(strengthScore.score.variableTags);
+    tags.addAll(dexterityScore.score.variableTags);
+    tags.addAll(constitutionScore.score.variableTags);
+    tags.addAll(intelligenceScore.score.variableTags);
+    tags.addAll(wisdomScore.score.variableTags);
+    tags.addAll(charismaScore.score.variableTags);
     return tags;
   }
 
+  Set<String> get templateVariableTags => templateVariables
+      .map(
+        (e) => e.tag,
+      )
+      .toSet();
+
   Set<String> get instanceVariableTags => variableTags
       .where(
-        (tag) => !templateVariables.containsKey(tag),
+        (tag) => !templateVariableTags.contains(tag),
       )
       .toSet();
 }

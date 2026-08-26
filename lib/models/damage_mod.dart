@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:summon_tracker/models/ability.dart';
 import 'package:summon_tracker/models/numeric_expression.dart';
@@ -35,14 +37,38 @@ enum BaseDamageType {
   bool get isMagical =>
       this != bludgeoning && this != piercing && this != slashing;
 
+  DamageType getDmgType([bool forceMagical = false]) =>
+      DamageType(longName: long, isMagical: forceMagical || isMagical);
+
   final String long;
   final String short;
   const BaseDamageType({required this.long, required this.short});
 }
 
+class DamageType {
+  final String longName;
+  final bool isMagical;
+  String get shortName => longName.substring(0, min(5, longName.length));
+  DamageType({required this.longName, required this.isMagical});
+  factory DamageType.core({
+    required BaseDamageType type,
+    bool forceM = false,
+  }) => type.getDmgType(forceM);
+
+  @override
+  bool operator ==(Object other) =>
+      other is DamageType &&
+      other.longName == longName &&
+      other.isMagical == isMagical;
+  @override
+  int get hashCode => Object.hash(longName, isMagical);
+}
+
 @freezed
 class DamageModifier with _$DamageModifier {
-  final String damageType;
+  @override
+  final DamageType damageType;
+  @override
   final DamageMod damageMod;
 
   const DamageModifier({required this.damageType, required this.damageMod});

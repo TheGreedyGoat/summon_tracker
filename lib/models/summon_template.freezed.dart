@@ -16,9 +16,9 @@ mixin _$SummonTemplate {
 
 //General
  String get _id; String get name; NumericExpression get armorClass; NumericExpression get hitPoints; FreeText get speed; FreeText get senses; FreeText get languages; NumericExpression get proficiencyBonus; List<DamageModifier> get damageMods;// Ability Scores + Save profs
- NumericExpression get strengthScore; Proficiency get strengthSave; NumericExpression get dexterityScore; Proficiency get dexteritySave; NumericExpression get constitutionScore; Proficiency get constitutionSave; NumericExpression get intelligenceScore; Proficiency get intelligenceSave; NumericExpression get wisdomScore; Proficiency get wisdomSave; NumericExpression get charismaScore; Proficiency get charismaSave;// skills
+ AbilityScoreNum get strengthScore; AbilityScoreNum get dexterityScore; AbilityScoreNum get constitutionScore; AbilityScoreNum get intelligenceScore; AbilityScoreNum get wisdomScore; AbilityScoreNum get charismaScore;// skills
  List<SkillProficiency> get skillProficiencies;// Features
- List<ActionFeature> get abilities; List<ActionFeature> get actions; List<ActionFeature> get bonusActions; List<ActionFeature> get reactions; Map<String, int> get templateVariables;
+ List<ActionFeature> get featAbilities; List<ActionFeature> get actions; List<ActionFeature> get bonusActions; List<ActionFeature> get reactions; List<MyVariable> get templateVariables;
 /// Create a copy of SummonTemplate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $SummonTemplateCopyWith<SummonTemplate> get copyWith => _$SummonTemplateCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SummonTemplate&&(identical(other._id, _id) || other._id == _id)&&(identical(other.name, name) || other.name == name)&&(identical(other.armorClass, armorClass) || other.armorClass == armorClass)&&(identical(other.hitPoints, hitPoints) || other.hitPoints == hitPoints)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.senses, senses) || other.senses == senses)&&(identical(other.languages, languages) || other.languages == languages)&&(identical(other.proficiencyBonus, proficiencyBonus) || other.proficiencyBonus == proficiencyBonus)&&const DeepCollectionEquality().equals(other.damageMods, damageMods)&&(identical(other.strengthScore, strengthScore) || other.strengthScore == strengthScore)&&(identical(other.strengthSave, strengthSave) || other.strengthSave == strengthSave)&&(identical(other.dexterityScore, dexterityScore) || other.dexterityScore == dexterityScore)&&(identical(other.dexteritySave, dexteritySave) || other.dexteritySave == dexteritySave)&&(identical(other.constitutionScore, constitutionScore) || other.constitutionScore == constitutionScore)&&(identical(other.constitutionSave, constitutionSave) || other.constitutionSave == constitutionSave)&&(identical(other.intelligenceScore, intelligenceScore) || other.intelligenceScore == intelligenceScore)&&(identical(other.intelligenceSave, intelligenceSave) || other.intelligenceSave == intelligenceSave)&&(identical(other.wisdomScore, wisdomScore) || other.wisdomScore == wisdomScore)&&(identical(other.wisdomSave, wisdomSave) || other.wisdomSave == wisdomSave)&&(identical(other.charismaScore, charismaScore) || other.charismaScore == charismaScore)&&(identical(other.charismaSave, charismaSave) || other.charismaSave == charismaSave)&&const DeepCollectionEquality().equals(other.skillProficiencies, skillProficiencies)&&const DeepCollectionEquality().equals(other.abilities, abilities)&&const DeepCollectionEquality().equals(other.actions, actions)&&const DeepCollectionEquality().equals(other.bonusActions, bonusActions)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&const DeepCollectionEquality().equals(other.templateVariables, templateVariables));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SummonTemplate&&(identical(other._id, _id) || other._id == _id)&&(identical(other.name, name) || other.name == name)&&(identical(other.armorClass, armorClass) || other.armorClass == armorClass)&&(identical(other.hitPoints, hitPoints) || other.hitPoints == hitPoints)&&(identical(other.speed, speed) || other.speed == speed)&&(identical(other.senses, senses) || other.senses == senses)&&(identical(other.languages, languages) || other.languages == languages)&&(identical(other.proficiencyBonus, proficiencyBonus) || other.proficiencyBonus == proficiencyBonus)&&const DeepCollectionEquality().equals(other.damageMods, damageMods)&&(identical(other.strengthScore, strengthScore) || other.strengthScore == strengthScore)&&(identical(other.dexterityScore, dexterityScore) || other.dexterityScore == dexterityScore)&&(identical(other.constitutionScore, constitutionScore) || other.constitutionScore == constitutionScore)&&(identical(other.intelligenceScore, intelligenceScore) || other.intelligenceScore == intelligenceScore)&&(identical(other.wisdomScore, wisdomScore) || other.wisdomScore == wisdomScore)&&(identical(other.charismaScore, charismaScore) || other.charismaScore == charismaScore)&&const DeepCollectionEquality().equals(other.skillProficiencies, skillProficiencies)&&const DeepCollectionEquality().equals(other.featAbilities, featAbilities)&&const DeepCollectionEquality().equals(other.actions, actions)&&const DeepCollectionEquality().equals(other.bonusActions, bonusActions)&&const DeepCollectionEquality().equals(other.reactions, reactions)&&const DeepCollectionEquality().equals(other.templateVariables, templateVariables));
 }
 
 
 @override
-int get hashCode => Object.hashAll([runtimeType,_id,name,armorClass,hitPoints,speed,senses,languages,proficiencyBonus,const DeepCollectionEquality().hash(damageMods),strengthScore,strengthSave,dexterityScore,dexteritySave,constitutionScore,constitutionSave,intelligenceScore,intelligenceSave,wisdomScore,wisdomSave,charismaScore,charismaSave,const DeepCollectionEquality().hash(skillProficiencies),const DeepCollectionEquality().hash(abilities),const DeepCollectionEquality().hash(actions),const DeepCollectionEquality().hash(bonusActions),const DeepCollectionEquality().hash(reactions),const DeepCollectionEquality().hash(templateVariables)]);
+int get hashCode => Object.hashAll([runtimeType,_id,name,armorClass,hitPoints,speed,senses,languages,proficiencyBonus,const DeepCollectionEquality().hash(damageMods),strengthScore,dexterityScore,constitutionScore,intelligenceScore,wisdomScore,charismaScore,const DeepCollectionEquality().hash(skillProficiencies),const DeepCollectionEquality().hash(featAbilities),const DeepCollectionEquality().hash(actions),const DeepCollectionEquality().hash(bonusActions),const DeepCollectionEquality().hash(reactions),const DeepCollectionEquality().hash(templateVariables)]);
 
 @override
 String toString() {
-  return 'SummonTemplate(_id: $_id, name: $name, armorClass: $armorClass, hitPoints: $hitPoints, speed: $speed, senses: $senses, languages: $languages, proficiencyBonus: $proficiencyBonus, damageMods: $damageMods, strengthScore: $strengthScore, strengthSave: $strengthSave, dexterityScore: $dexterityScore, dexteritySave: $dexteritySave, constitutionScore: $constitutionScore, constitutionSave: $constitutionSave, intelligenceScore: $intelligenceScore, intelligenceSave: $intelligenceSave, wisdomScore: $wisdomScore, wisdomSave: $wisdomSave, charismaScore: $charismaScore, charismaSave: $charismaSave, skillProficiencies: $skillProficiencies, abilities: $abilities, actions: $actions, bonusActions: $bonusActions, reactions: $reactions, templateVariables: $templateVariables)';
+  return 'SummonTemplate(_id: $_id, name: $name, armorClass: $armorClass, hitPoints: $hitPoints, speed: $speed, senses: $senses, languages: $languages, proficiencyBonus: $proficiencyBonus, damageMods: $damageMods, strengthScore: $strengthScore, dexterityScore: $dexterityScore, constitutionScore: $constitutionScore, intelligenceScore: $intelligenceScore, wisdomScore: $wisdomScore, charismaScore: $charismaScore, skillProficiencies: $skillProficiencies, featAbilities: $featAbilities, actions: $actions, bonusActions: $bonusActions, reactions: $reactions, templateVariables: $templateVariables)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $SummonTemplateCopyWith<$Res>  {
   factory $SummonTemplateCopyWith(SummonTemplate value, $Res Function(SummonTemplate) _then) = _$SummonTemplateCopyWithImpl;
 @useResult
 $Res call({
- String name, NumericExpression armorClass, NumericExpression hitPoints, FreeText speed, FreeText senses, FreeText languages, NumericExpression proficiencyBonus, List<DamageModifier> damageMods, NumericExpression strengthScore, Proficiency strengthSave, NumericExpression dexterityScore, Proficiency dexteritySave, NumericExpression constitutionScore, Proficiency constitutionSave, NumericExpression intelligenceScore, Proficiency intelligenceSave, NumericExpression wisdomScore, Proficiency wisdomSave, NumericExpression charismaScore, Proficiency charismaSave, List<SkillProficiency> skillProficiencies, List<ActionFeature> abilities, List<ActionFeature> bonusActions, List<ActionFeature> reactions, Map<String, int> templateVariables, List<ActionFeature> actions
+ String name, NumericExpression armorClass, NumericExpression hitPoints, FreeText speed, FreeText senses, FreeText languages, NumericExpression proficiencyBonus, List<DamageModifier> damageMods, AbilityScoreNum strengthScore, AbilityScoreNum dexterityScore, AbilityScoreNum constitutionScore, AbilityScoreNum intelligenceScore, AbilityScoreNum wisdomScore, AbilityScoreNum charismaScore, List<SkillProficiency> skillProficiencies, List<ActionFeature> featAbilities, List<ActionFeature> bonusActions, List<ActionFeature> reactions, List<MyVariable> templateVariables, List<ActionFeature> actions
 });
 
 
@@ -66,7 +66,7 @@ class _$SummonTemplateCopyWithImpl<$Res>
 
 /// Create a copy of SummonTemplate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? armorClass = null,Object? hitPoints = null,Object? speed = null,Object? senses = null,Object? languages = null,Object? proficiencyBonus = null,Object? damageMods = null,Object? strengthScore = null,Object? strengthSave = null,Object? dexterityScore = null,Object? dexteritySave = null,Object? constitutionScore = null,Object? constitutionSave = null,Object? intelligenceScore = null,Object? intelligenceSave = null,Object? wisdomScore = null,Object? wisdomSave = null,Object? charismaScore = null,Object? charismaSave = null,Object? skillProficiencies = null,Object? abilities = null,Object? bonusActions = null,Object? reactions = null,Object? templateVariables = null,Object? actions = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? armorClass = null,Object? hitPoints = null,Object? speed = null,Object? senses = null,Object? languages = null,Object? proficiencyBonus = null,Object? damageMods = null,Object? strengthScore = null,Object? dexterityScore = null,Object? constitutionScore = null,Object? intelligenceScore = null,Object? wisdomScore = null,Object? charismaScore = null,Object? skillProficiencies = null,Object? featAbilities = null,Object? bonusActions = null,Object? reactions = null,Object? templateVariables = null,Object? actions = null,}) {
   return _then(SummonTemplate(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,armorClass: null == armorClass ? _self.armorClass : armorClass // ignore: cast_nullable_to_non_nullable
@@ -77,23 +77,17 @@ as FreeText,languages: null == languages ? _self.languages : languages // ignore
 as FreeText,proficiencyBonus: null == proficiencyBonus ? _self.proficiencyBonus : proficiencyBonus // ignore: cast_nullable_to_non_nullable
 as NumericExpression,damageMods: null == damageMods ? _self.damageMods : damageMods // ignore: cast_nullable_to_non_nullable
 as List<DamageModifier>,strengthScore: null == strengthScore ? _self.strengthScore : strengthScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,strengthSave: null == strengthSave ? _self.strengthSave : strengthSave // ignore: cast_nullable_to_non_nullable
-as Proficiency,dexterityScore: null == dexterityScore ? _self.dexterityScore : dexterityScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,dexteritySave: null == dexteritySave ? _self.dexteritySave : dexteritySave // ignore: cast_nullable_to_non_nullable
-as Proficiency,constitutionScore: null == constitutionScore ? _self.constitutionScore : constitutionScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,constitutionSave: null == constitutionSave ? _self.constitutionSave : constitutionSave // ignore: cast_nullable_to_non_nullable
-as Proficiency,intelligenceScore: null == intelligenceScore ? _self.intelligenceScore : intelligenceScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,intelligenceSave: null == intelligenceSave ? _self.intelligenceSave : intelligenceSave // ignore: cast_nullable_to_non_nullable
-as Proficiency,wisdomScore: null == wisdomScore ? _self.wisdomScore : wisdomScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,wisdomSave: null == wisdomSave ? _self.wisdomSave : wisdomSave // ignore: cast_nullable_to_non_nullable
-as Proficiency,charismaScore: null == charismaScore ? _self.charismaScore : charismaScore // ignore: cast_nullable_to_non_nullable
-as NumericExpression,charismaSave: null == charismaSave ? _self.charismaSave : charismaSave // ignore: cast_nullable_to_non_nullable
-as Proficiency,skillProficiencies: null == skillProficiencies ? _self.skillProficiencies : skillProficiencies // ignore: cast_nullable_to_non_nullable
-as List<SkillProficiency>,abilities: null == abilities ? _self.abilities : abilities // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,dexterityScore: null == dexterityScore ? _self.dexterityScore : dexterityScore // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,constitutionScore: null == constitutionScore ? _self.constitutionScore : constitutionScore // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,intelligenceScore: null == intelligenceScore ? _self.intelligenceScore : intelligenceScore // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,wisdomScore: null == wisdomScore ? _self.wisdomScore : wisdomScore // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,charismaScore: null == charismaScore ? _self.charismaScore : charismaScore // ignore: cast_nullable_to_non_nullable
+as AbilityScoreNum,skillProficiencies: null == skillProficiencies ? _self.skillProficiencies : skillProficiencies // ignore: cast_nullable_to_non_nullable
+as List<SkillProficiency>,featAbilities: null == featAbilities ? _self.featAbilities : featAbilities // ignore: cast_nullable_to_non_nullable
 as List<ActionFeature>,bonusActions: null == bonusActions ? _self.bonusActions : bonusActions // ignore: cast_nullable_to_non_nullable
 as List<ActionFeature>,reactions: null == reactions ? _self.reactions : reactions // ignore: cast_nullable_to_non_nullable
 as List<ActionFeature>,templateVariables: null == templateVariables ? _self.templateVariables : templateVariables // ignore: cast_nullable_to_non_nullable
-as Map<String, int>,actions: null == actions ? _self.actions : actions // ignore: cast_nullable_to_non_nullable
+as List<MyVariable>,actions: null == actions ? _self.actions : actions // ignore: cast_nullable_to_non_nullable
 as List<ActionFeature>,
   ));
 }

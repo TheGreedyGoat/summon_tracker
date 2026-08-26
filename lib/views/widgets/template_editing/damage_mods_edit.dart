@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_utils/widgets/multi_choice_button.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
 import 'package:summon_tracker/models/damage_mod.dart';
+import 'package:summon_tracker/views/widgets/labeled_check_box.dart';
 
 /// Widget to edit damage resitances, vulnerabilities etc.
 class DamageModsEdit extends ConsumerStatefulWidget {
@@ -32,6 +33,7 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
     super.dispose();
   }
 
+  bool newTypeIsM = false;
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(editTemplateProvider);
@@ -42,31 +44,52 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
           (modifier) =>
               _modChoice(modifier.damageType, modifier.damageMod.index),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                final text = _controller.text.trim();
-                if (text.isNotEmpty) {
-                  _controller.clear();
-                  _setDmgMod(text, DamageMod.none);
-                }
-              },
-              icon: Icon(Icons.add),
-            ),
-          ],
-        ),
+        _addDamage(),
       ],
     );
   }
 
-  Widget _modChoice(String damageName, int? initialValue) => Card(
+  Widget _addDamage() => Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    spacing: 8.0,
+    children: [
+      Expanded(
+        child: TextField(
+          controller: _controller,
+          maxLength: 12,
+        ),
+      ),
+      LabeledCheckBox(
+        rightLabel: Text('magical'),
+        initialValue: newTypeIsM,
+        onChanged: (value) {
+          setState(() {
+            newTypeIsM = value!;
+          });
+        },
+      ),
+      IconButton(
+        onPressed: () {
+          final text = _controller.text.trim();
+          if (text.isNotEmpty) {
+            final type = DamageType(
+              longName: text,
+              isMagical: newTypeIsM,
+            );
+            _controller.clear();
+            _setDmgMod(type, DamageMod.none);
+            newTypeIsM = false;
+          }
+        },
+        icon: Icon(Icons.add),
+      ),
+    ],
+  );
+
+  /// widget to switch between none, vuln, res and imm
+  Widget _modChoice(DamageType dmgType, int? initialValue) => Card(
+    color: dmgType.isMagical ? const Color.fromARGB(255, 160, 214, 209) : null,
+
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -76,7 +99,7 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(damageName),
+                Text(dmgType.longName),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: 30),
 
@@ -90,7 +113,7 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
                         (mod) {
                           return MultiChoiceButtonItem(
                             onSelected: () {
-                              _setDmgMod(damageName, mod);
+                              _setDmgMod(dmgType, mod);
                             },
                             child: Text(
                               mod.short,
@@ -110,7 +133,7 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
           dimension: 30,
           child: IconButton(
             onPressed: () {
-              _setDmgMod(damageName, DamageMod.none, true);
+              _setDmgMod(dmgType, DamageMod.none, true);
             },
             iconSize: 15,
             icon: Icon(CupertinoIcons.xmark),
@@ -120,12 +143,13 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
     ),
   );
 
-  void _setDmgMod(String damageType, DamageMod mod, [bool remove = false]) {
+  void _setDmgMod(DamageType damageType, DamageMod mod, [bool remove = false]) {
     notifier.updateList(
       value: DamageModifier(damageType: damageType, damageMod: mod),
       getList: (state) => state.damageMods,
       compare: (a, b) =>
-          a.damageType.toLowerCase() == b.damageType.toLowerCase(),
+          a.damageType.longName.toLowerCase() ==
+          b.damageType.longName.toLowerCase(),
       update: (state, list) => state.copyWith(damageMods: list),
       remove: remove,
     );

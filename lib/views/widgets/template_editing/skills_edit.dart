@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:my_utils/my_utils.dart';
+import 'package:summon_tracker/models/ability.dart';
 import 'package:summon_tracker/models/skill.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
 import 'package:summon_tracker/models/damage_mod.dart';
@@ -20,11 +21,7 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
       notifier.updateState(update);
 
   final TextEditingController _controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  Ability newSkillAbility = Ability.str;
 
   @override
   void dispose() {
@@ -38,34 +35,57 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
     return Column(
       children: [
         ...state.skillProficiencies.map(
-          (skill) => _skillChoice(skill.skillName),
+          (skill) => _skillChoice(skill.skill),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _controller,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                final text = _controller.text.trim();
-                if (text.isNotEmpty) {
-                  _controller.clear();
-                  _setSkill(text, Proficiency.none);
-                }
-              },
-              icon: Icon(Icons.add),
-            ),
-          ],
-        ),
+        _addSkill(),
       ],
     );
   }
 
+  Widget _addSkill() => Row(
+    spacing: 8.0,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Expanded(
+        child: TextField(
+          controller: _controller,
+          maxLength: 12,
+        ),
+      ),
+      DropdownButton<Ability>(
+        value: newSkillAbility,
+        items: [
+          ...Ability.values.map(
+            (ab) => DropdownMenuItem(
+              child: Text(ab.long),
+              value: ab,
+            ),
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            newSkillAbility = value ?? newSkillAbility;
+          });
+        },
+      ),
+      IconButton(
+        onPressed: () {
+          final text = _controller.text.trim();
+          if (text.isNotEmpty) {
+            _controller.clear();
+            _setSkill(
+              Skill(name: text, ability: newSkillAbility),
+              Proficiency.none,
+            );
+          }
+        },
+        icon: Icon(Icons.add),
+      ),
+    ],
+  );
+
   Widget _skillChoice(
-    String skillName,
+    Skill skill,
   ) => Card(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +96,17 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(skillName),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: ' (${skill.ability.short}) ',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      TextSpan(text: skill.name),
+                    ],
+                  ),
+                ),
                 ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: 30),
                   child: MultiChoiceButton(
@@ -86,10 +116,12 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
                     items: Proficiency.values
                         .map(
                           (prof) => MultiChoiceButtonItem(
-                            onSelected: () => _setSkill(skillName, prof),
+                            onSelected: () => _setSkill(skill, prof),
                             child: Text(
                               prof.short,
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         )
@@ -105,7 +137,7 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
           dimension: 30,
           child: IconButton(
             onPressed: () {
-              _setSkill(skillName, Proficiency.none, true);
+              _setSkill(skill, Proficiency.none, true);
             },
             iconSize: 15,
             icon: Icon(CupertinoIcons.xmark),
@@ -115,12 +147,12 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
     ),
   );
 
-  void _setSkill(String skillName, Proficiency prof, [bool remove = false]) {
+  void _setSkill(Skill skill, Proficiency prof, [bool remove = false]) {
     notifier.updateList(
       remove: remove,
-      value: SkillProficiency(skillName: skillName, prof: prof),
+      value: SkillProficiency(skill: skill, prof: prof),
       getList: (state) => state.skillProficiencies,
-      compare: (a, b) => a.skillName == b.skillName,
+      compare: (a, b) => a.skill == b.skill,
       update: (state, list) => state.copyWith(skillProficiencies: list),
     );
   }

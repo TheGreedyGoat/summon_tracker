@@ -29,6 +29,9 @@ class _EditPage0State extends ConsumerState<EditPage0> {
         MyTextField(
           label: 'Name',
           initialValue: state.name,
+          onChanged: (value) => updateState(
+            (state) => state.copyWith(name: value ?? 'Heinz-Gunther'),
+          ),
         ),
 
         SeparatorLine(),

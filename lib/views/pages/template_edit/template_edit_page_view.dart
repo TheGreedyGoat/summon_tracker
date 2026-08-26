@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
+import 'package:summon_tracker/notifiers/widget_tree_state.dart';
+import 'package:summon_tracker/services/database/database_service.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_0.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_1.dart';
 import 'package:summon_tracker/views/pages/template_edit/edit_page_2.dart';
@@ -25,6 +28,7 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   final List<Widget> pages = [EditPage0(), EditPage1(), EditPage2()];
+  WidgetTreeNotifier get wtNotifier => ref.read(wtProvider.notifier);
 
   @override
   void initState() {
@@ -41,16 +45,20 @@ class _TemplateEditPageViewState extends ConsumerState<TemplateEditPageView> {
     }
 
     try {
-      print(state.toTemplate());
-    } catch (e) {
-      print(e);
-    }
+      final tmpl = state.toTemplate();
+      if (tmpl != null) {
+        DatabaseService.instance.insertTemplate(tmpl).then(
+          (_) {
+            wtNotifier.set(wtNotifier.overview);
+          },
+        );
+      }
+    } catch (e) {}
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(editTemplateProvider);
-    print(state.variableState);
     return Column(
       children: [
         DecoratedBox(

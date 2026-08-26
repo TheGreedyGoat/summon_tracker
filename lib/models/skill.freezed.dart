@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SkillProficiency {
 
- String get skillName; Proficiency get prof;
+ Skill get skill; Proficiency get prof;
 /// Create a copy of SkillProficiency
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $SkillProficiencyCopyWith<SkillProficiency> get copyWith => _$SkillProficiencyCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SkillProficiency&&(identical(other.skillName, skillName) || other.skillName == skillName)&&(identical(other.prof, prof) || other.prof == prof));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SkillProficiency&&(identical(other.skill, skill) || other.skill == skill)&&(identical(other.prof, prof) || other.prof == prof));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,skillName,prof);
+int get hashCode => Object.hash(runtimeType,skill,prof);
 
 @override
 String toString() {
-  return 'SkillProficiency(skillName: $skillName, prof: $prof)';
+  return 'SkillProficiency(skill: $skill, prof: $prof)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $SkillProficiencyCopyWith<$Res>  {
   factory $SkillProficiencyCopyWith(SkillProficiency value, $Res Function(SkillProficiency) _then) = _$SkillProficiencyCopyWithImpl;
 @useResult
 $Res call({
- String skillName, Proficiency prof
+ Skill skill, Proficiency prof
 });
 
 
@@ -62,10 +62,10 @@ class _$SkillProficiencyCopyWithImpl<$Res>
 
 /// Create a copy of SkillProficiency
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? skillName = null,Object? prof = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? skill = null,Object? prof = null,}) {
   return _then(SkillProficiency(
-skillName: null == skillName ? _self.skillName : skillName // ignore: cast_nullable_to_non_nullable
-as String,prof: null == prof ? _self.prof : prof // ignore: cast_nullable_to_non_nullable
+skill: null == skill ? _self.skill : skill // ignore: cast_nullable_to_non_nullable
+as Skill,prof: null == prof ? _self.prof : prof // ignore: cast_nullable_to_non_nullable
 as Proficiency,
   ));
 }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'damage_mod.dart';
+part of 'widget_tree_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,40 +12,40 @@ part of 'damage_mod.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$DamageModifier {
+mixin _$WidgetTreeState {
 
- DamageType get damageType; DamageMod get damageMod;
-/// Create a copy of DamageModifier
+ PreferredSizeWidget? get appbar; Widget get body;
+/// Create a copy of WidgetTreeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$DamageModifierCopyWith<DamageModifier> get copyWith => _$DamageModifierCopyWithImpl<DamageModifier>(this as DamageModifier, _$identity);
+$WidgetTreeStateCopyWith<WidgetTreeState> get copyWith => _$WidgetTreeStateCopyWithImpl<WidgetTreeState>(this as WidgetTreeState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DamageModifier&&(identical(other.damageType, damageType) || other.damageType == damageType)&&(identical(other.damageMod, damageMod) || other.damageMod == damageMod));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WidgetTreeState&&(identical(other.appbar, appbar) || other.appbar == appbar)&&(identical(other.body, body) || other.body == body));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,damageType,damageMod);
+int get hashCode => Object.hash(runtimeType,appbar,body);
 
 @override
 String toString() {
-  return 'DamageModifier(damageType: $damageType, damageMod: $damageMod)';
+  return 'WidgetTreeState(appbar: $appbar, body: $body)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $DamageModifierCopyWith<$Res>  {
-  factory $DamageModifierCopyWith(DamageModifier value, $Res Function(DamageModifier) _then) = _$DamageModifierCopyWithImpl;
+abstract mixin class $WidgetTreeStateCopyWith<$Res>  {
+  factory $WidgetTreeStateCopyWith(WidgetTreeState value, $Res Function(WidgetTreeState) _then) = _$WidgetTreeStateCopyWithImpl;
 @useResult
 $Res call({
- DamageType damageType, DamageMod damageMod
+ Widget body, PreferredSizeWidget? appbar
 });
 
 
@@ -53,28 +53,28 @@ $Res call({
 
 }
 /// @nodoc
-class _$DamageModifierCopyWithImpl<$Res>
-    implements $DamageModifierCopyWith<$Res> {
-  _$DamageModifierCopyWithImpl(this._self, this._then);
+class _$WidgetTreeStateCopyWithImpl<$Res>
+    implements $WidgetTreeStateCopyWith<$Res> {
+  _$WidgetTreeStateCopyWithImpl(this._self, this._then);
 
-  final DamageModifier _self;
-  final $Res Function(DamageModifier) _then;
+  final WidgetTreeState _self;
+  final $Res Function(WidgetTreeState) _then;
 
-/// Create a copy of DamageModifier
+/// Create a copy of WidgetTreeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? damageType = null,Object? damageMod = null,}) {
-  return _then(DamageModifier(
-damageType: null == damageType ? _self.damageType : damageType // ignore: cast_nullable_to_non_nullable
-as DamageType,damageMod: null == damageMod ? _self.damageMod : damageMod // ignore: cast_nullable_to_non_nullable
-as DamageMod,
+@pragma('vm:prefer-inline') @override $Res call({Object? body = null,Object? appbar = freezed,}) {
+  return _then(WidgetTreeState(
+body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
+as Widget,appbar: freezed == appbar ? _self.appbar : appbar // ignore: cast_nullable_to_non_nullable
+as PreferredSizeWidget?,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [DamageModifier].
-extension DamageModifierPatterns on DamageModifier {
+/// Adds pattern-matching-related methods to [WidgetTreeState].
+extension WidgetTreeStatePatterns on WidgetTreeState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
