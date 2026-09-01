@@ -1,4 +1,4 @@
-import 'package:summon_tracker/models/free_text.dart';
+import 'package:summon_tracker/logic/models/free_text.dart';
 
 final _txt = '''
 . Melee Weapon Attack: +[lvl] to hit, reach 5 ft., 

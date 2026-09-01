@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:summon_tracker/models/simple_die_expression.dart';
+import 'package:summon_tracker/logic/models/simple_die_expression.dart';
 
 void main() {
   group(

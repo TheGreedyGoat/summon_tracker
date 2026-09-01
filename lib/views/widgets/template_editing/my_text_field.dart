@@ -11,6 +11,7 @@ class MyTextField extends ConsumerStatefulWidget {
   final bool isRequired;
   final void Function(String? value)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
+  final bool autofocus;
   const MyTextField({
     super.key,
     required this.label,
@@ -19,6 +20,7 @@ class MyTextField extends ConsumerStatefulWidget {
     this.initialValue,
     this.isRequired = true,
     this.inputFormatters,
+    this.autofocus = false,
   });
 
   /// creates a textfield for digits
@@ -28,6 +30,7 @@ class MyTextField extends ConsumerStatefulWidget {
     this.onChanged,
     this.initialValue,
     this.isRequired = true,
+    this.autofocus = false,
   }) : this.inputFormatters = [
          FilteringTextInputFormatter.digitsOnly,
        ];
@@ -41,6 +44,7 @@ class _TextFieldStringState extends ConsumerState<MyTextField> {
   Widget build(BuildContext context) {
     return EditWrapper(
       child: TextFormField(
+        autofocus: widget.autofocus,
         initialValue: widget.initialValue,
         decoration: InputDecoration(
           labelText: widget.label,

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:my_utils/my_utils.dart';
-import 'package:summon_tracker/models/ability.dart';
-import 'package:summon_tracker/models/skill.dart';
-import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
-import 'package:summon_tracker/models/damage_mod.dart';
+import 'package:summon_tracker/logic/models/ability.dart';
+import 'package:summon_tracker/logic/models/skill.dart';
+import 'package:summon_tracker/logic/notifiers/edit_variant_notifier.dart';
+import 'package:summon_tracker/logic/models/damage_mod.dart';
 
 class SkillsEdit extends ConsumerStatefulWidget {
   const SkillsEdit({super.key});
@@ -15,9 +15,9 @@ class SkillsEdit extends ConsumerStatefulWidget {
 }
 
 class _SkillsEditState extends ConsumerState<SkillsEdit> {
-  EditTemplateNotifier get notifier => ref.read(editTemplateProvider.notifier);
+  EditVariantNotifier get notifier => ref.read(editVariantProvider.notifier);
 
-  void update(EditTemplateState Function(EditTemplateState state) update) =>
+  void update(EditVariantState Function(EditVariantState state) update) =>
       notifier.updateState(update);
 
   final TextEditingController _controller = TextEditingController();
@@ -31,7 +31,7 @@ class _SkillsEditState extends ConsumerState<SkillsEdit> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(editTemplateProvider);
+    final state = ref.watch(editVariantProvider);
     return Column(
       children: [
         ...state.skillProficiencies.map(

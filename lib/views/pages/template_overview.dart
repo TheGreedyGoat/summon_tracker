@@ -1,15 +1,16 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:summon_tracker/services/database/database_service.dart';
+import 'package:summon_tracker/logic/notifiers/providers.dart';
+import 'package:summon_tracker/views/dialogs/create_master_dialog.dart';
+import 'package:summon_tracker/views/pages/summon_master_tile.dart';
 
 /// The app's main page.
 ///
 /// From here the user can overview, summon and manage their created templates, edit them or create new ones.
 ///
 ///
-class TemplateOverview extends StatelessWidget {
+class TemplateOverview extends ConsumerStatefulWidget {
   /// The app's main page.
   ///
   /// From here the user can overview, summon and manage their created templates, edit them or create new ones.
@@ -18,35 +19,39 @@ class TemplateOverview extends StatelessWidget {
   const TemplateOverview({super.key});
 
   @override
+  ConsumerState<TemplateOverview> createState() => _TemplateOverviewState();
+}
+
+class _TemplateOverviewState extends ConsumerState<TemplateOverview> {
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: DatabaseService.instance.templates,
+      future: ref.watch(refMasters.future),
       builder: (context, builder) {
         if (builder.hasData) {
-          final templates = builder.requireData;
+          final masters = builder.requireData;
           return ListView.builder(
-            itemCount: max(templates.length, 1),
+            itemCount: max(masters.length, 1),
             itemBuilder: (context, index) {
-              if (templates.isNotEmpty) {
-                final tmpl = templates[index];
-                return ListTile(
-                  title: Text(tmpl.coreMap.toString()),
-                  subtitle: Text('(summoncount)'),
-                );
+              if (masters.isNotEmpty) {
+                return SummonMasterTile(masterID: masters[index].id);
               } else {
                 return ListTile(
                   title: Text('No summons yet'),
-                  trailing: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
                 );
               }
             },
           );
         }
         if (builder.hasError) {
-          return Text('');
+          return Text(builder.error.toString());
         }
         return Placeholder();
       },
     );
+  }
+
+  Future<void> addMaster(BuildContext context) async {
+    await showMasterCreationDialog(context);
   }
 }

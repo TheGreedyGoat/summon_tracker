@@ -1,17 +1,18 @@
 erDiagram
-
-    SUMMON_TEMPLATE{
+    SUMMON_MASTER{
         String id PK
+        String name
+    }
+    SUMMON_VARIANT{
+        String id PK
+        String Master_ID FK
+        String name
         String HP
         String AC
         String prof
         etc pp
     }
 
-    %% ABILITY{
-    %%     String long PK
-    %%     String short
-    %% }
     ABILITY_SCORE{
         String T_id PK, FK
         String ability PK
@@ -51,37 +52,32 @@ erDiagram
     SUMMON_INSTANCE{
         String id PK
         String T_id FK
-    }
-
-    INSTANCE_VARIABLE{
-        String I_id PK,FK
-        String V_id PK, FK
+        String name
     }
 
 
     VARIABLE{
         String id PK
+        String? T_ID FK
+        String? I_ID FK
         String displayName
         String tag
         int value
     }
 
-    TEMPLATE_VARIABLE{
-        String T_id PK, FK
-        String V_id PK, FK
 
-    }
-    SUMMON_TEMPLATE ||--o{ SUMMON_INSTANCE: has
-    SUMMON_TEMPLATE ||--o{ TEMPLATE_VARIABLE: has
-    SUMMON_TEMPLATE ||--o{ SKILL_PROFICIENCY: has
-    SUMMON_TEMPLATE ||--o{ ABILITY_SCORE: has
-    SUMMON_TEMPLATE ||--o{ DAMAGE_MODIFIER: has
-    SUMMON_TEMPLATE ||--o{ FEATURE: has
-    %% ABILITY_SCORE ||--o{ ABILITY: "counts for"
+    SUMMON_MASTER ||--o{ SUMMON_VARIANT: has
+
+    SUMMON_VARIANT ||--o{ SUMMON_INSTANCE: "gets summoned to"
+    SUMMON_VARIANT ||--o{ VARIABLE: contains
+    SUMMON_VARIANT ||--o{ SKILL_PROFICIENCY: has
+    SUMMON_VARIANT ||--o{ ABILITY_SCORE: has
+    SUMMON_VARIANT ||--o{ DAMAGE_MODIFIER: has
+    SUMMON_VARIANT ||--o{ FEATURE: has
+
+    SUMMON_INSTANCE ||--o{ VARIABLE: contains
+
     SKILL_PROFICIENCY ||--o{ SKILL: "counts for"
-    %% ABILITY ||--o{ SKILL: "defines"
+
     DAMAGE_MODIFIER ||--o{ DAMAGE_TYPE: modifies
 
-    SUMMON_INSTANCE ||--o{ INSTANCE_VARIABLE: contains
-    INSTANCE_VARIABLE ||--|| VARIABLE : is
-    TEMPLATE_VARIABLE ||--|| VARIABLE : is

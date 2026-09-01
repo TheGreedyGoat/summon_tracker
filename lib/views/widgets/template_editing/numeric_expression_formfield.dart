@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:summon_tracker/models/numeric_expression.dart';
+import 'package:summon_tracker/logic/models/numeric_expression.dart';
 import 'package:summon_tracker/views/styling/text_styles.dart';
 import 'package:summon_tracker/views/widgets/template_editing/edit_decoration.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:my_utils/widgets/multi_choice_button.dart';
-import 'package:summon_tracker/notifiers/edit_template_notifier.dart';
-import 'package:summon_tracker/models/damage_mod.dart';
+import 'package:summon_tracker/logic/notifiers/edit_variant_notifier.dart';
+import 'package:summon_tracker/logic/models/damage_mod.dart';
 import 'package:summon_tracker/views/widgets/labeled_check_box.dart';
 
 /// Widget to edit damage resitances, vulnerabilities etc.
@@ -16,8 +16,8 @@ class DamageModsEdit extends ConsumerStatefulWidget {
 }
 
 class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
-  EditTemplateNotifier get notifier => ref.read(editTemplateProvider.notifier);
-  void update(EditTemplateState Function(EditTemplateState state) update) =>
+  EditVariantNotifier get notifier => ref.read(editVariantProvider.notifier);
+  void update(EditVariantState Function(EditVariantState state) update) =>
       notifier.updateState(update);
 
   final TextEditingController _controller = TextEditingController();
@@ -36,7 +36,7 @@ class _DamageModsEditState extends ConsumerState<DamageModsEdit> {
   bool newTypeIsM = false;
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(editTemplateProvider);
+    final state = ref.watch(editVariantProvider);
     return Column(
       spacing: 4.0,
       children: [
